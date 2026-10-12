@@ -38,3 +38,24 @@ TEST_CASE("Estoque: não permite que a quantidade fique negativa") {
     CHECK(estoque.removerUnidades(2, 1) == false);
     CHECK(estoque.consultarQuantidade(2) == 0);
 }
+
+
+TEST_CASE("Estoque: verifica se há quantidade suficiente") {
+    Estoque estoque;
+    estoque.adicionarUnidades(1, 5);
+
+    CHECK(estoque.temQuantidadeSuficiente(1, 5) == true);
+    CHECK(estoque.temQuantidadeSuficiente(1, 3) == true);
+    CHECK(estoque.temQuantidadeSuficiente(1, 6) == false);
+}
+
+TEST_CASE("Estoque: identifica produtos esgotados") {
+    Estoque estoque;
+    CHECK(estoque.estaEsgotado(1) == true);
+
+    estoque.adicionarUnidades(1, 2);
+    CHECK(estoque.estaEsgotado(1) == false);
+
+    estoque.removerUnidades(1, 2);
+    CHECK(estoque.estaEsgotado(1) == true);
+}
