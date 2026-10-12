@@ -31,3 +31,15 @@ TEST_CASE("Administrador: atualiza o estoque removendo unidades sem ficar negati
     admin.atualizarEstoque(&estoque, 10, -10);
     CHECK(estoque.consultarQuantidade(10) == 2);
 }
+
+
+TEST_CASE("Administrador: atualiza o status de um pedido") {
+    Administrador admin(1, "Maria", "maria@loja.com", "senha123");
+    Pedido pedido(100, nullptr);
+
+    admin.atualizarStatusPedido(&pedido, "Enviado");
+    CHECK(pedido.getStatus() == "Enviado");
+
+    admin.atualizarStatusPedido(&pedido, "Entregue");
+    CHECK(pedido.getStatus() == "Entregue");
+}
