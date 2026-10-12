@@ -36,3 +36,13 @@ $(TEST_BIN): $(OBJS) $(TEST_OBJS)
 
 test: $(TEST_BIN)
 	./$(TEST_BIN)
+
+
+.PHONY: coverage
+
+coverage: clean
+	$(MAKE) $(TEST_BIN) CXXFLAGS="$(CXXFLAGS) --coverage -O0"
+	-./$(TEST_BIN)
+	@mkdir -p $(BUILD_DIR)/cobertura
+	gcovr -r . --filter $(SRC_DIR)/ --print-summary \
+	      --html-details $(BUILD_DIR)/cobertura/index.html
