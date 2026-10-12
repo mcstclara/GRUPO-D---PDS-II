@@ -19,16 +19,19 @@ public:
     /**
      * @brief Construtor da classe KitRoupas.
      *
+     * O preço base e o material do kit não são informados, pois o
+     * preço é calculado a partir dos produtos que o compõem.
+     *
      * @param id Identificador único do kit.
      * @param nome Nome do kit.
-     * @param descricao Descrição do kit.
      * @param categoria Categoria do kit.
-     * @param desconto Percentual de desconto aplicado ao kit.
+     * @param colecao Coleção à qual o kit pertence.
+     * @param desconto Percentual de desconto aplicado ao kit (ex.: 10 para 10%).
      */
     KitRoupas(int id,
               const std::string& nome,
-              const std::string& descricao,
               const std::string& categoria,
+              const std::string& colecao,
               double desconto);
 
     /**
