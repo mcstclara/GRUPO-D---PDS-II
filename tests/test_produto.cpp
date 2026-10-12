@@ -31,3 +31,23 @@ TEST_CASE("Produto: adiciona e consulta os tamanhos disponíveis") {
     CHECK(camiseta.temTamanho("M") == true);
     CHECK(camiseta.temTamanho("G") == false);
 }
+
+
+TEST_CASE("Produto: retorna as medidas de cada tamanho") {
+    Produto camiseta(1, "Camiseta Basica", "Blusas", 59.90, "Algodao", "Verao 2026");
+    camiseta.adicionarTamanho("P", {88.0, 72.0, 94.0});
+
+    std::vector<double> medidasP = camiseta.getMedidas("P");
+    REQUIRE(medidasP.size() == 3);
+    CHECK(medidasP[0] == doctest::Approx(88.0));
+    CHECK(medidasP[1] == doctest::Approx(72.0));
+    CHECK(medidasP[2] == doctest::Approx(94.0));
+}
+
+TEST_CASE("Produto: tamanho inexistente não tem medidas") {
+    Produto camiseta(1, "Camiseta Basica", "Blusas", 59.90, "Algodao", "Verao 2026");
+    camiseta.adicionarTamanho("P", {88.0, 72.0, 94.0});
+
+    CHECK(camiseta.getMedidas("GG").empty());
+}
+
