@@ -39,3 +39,18 @@ TEST_CASE("Pedido: adiciona produtos com suas quantidades") {
     CHECK(produtos[1] == &blusa);
     CHECK(quantidades[1] == 2);
 }
+
+TEST_CASE("Pedido: calcula o valor total") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Produto calca(1, "Calca Jeans", "Calcas", 150.0, "Jeans", "Inverno 2026");
+    Produto blusa(2, "Blusa de Trico", "Blusas", 90.0, "La", "Inverno 2026");
+    Pedido pedido(100, &cliente);
+
+    CHECK(pedido.calcularTotal() == doctest::Approx(0.0));
+
+    pedido.adicionarProduto(&calca, 1);
+    pedido.adicionarProduto(&blusa, 2);
+
+    CHECK(pedido.calcularTotal() == doctest::Approx(330.0));
+}
+
