@@ -10,7 +10,7 @@ bool TrocaDevolucao::verificarElegibilidade() const {
     return false;
 }
 
-void TrocaDevolucao::solicitarTroca() {r
+void TrocaDevolucao::solicitarTroca() {
 }
 
 void TrocaDevolucao::solicitarDevolucao() {
