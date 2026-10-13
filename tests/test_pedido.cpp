@@ -54,3 +54,16 @@ TEST_CASE("Pedido: calcula o valor total") {
     CHECK(pedido.calcularTotal() == doctest::Approx(330.0));
 }
 
+TEST_CASE("Pedido: gera um resumo com os dados do pedido") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Produto calca(1, "Calca Jeans", "Calcas", 150.0, "Jeans", "Inverno 2026");
+    Pedido pedido(100, &cliente);
+    pedido.adicionarProduto(&calca, 2);
+
+    std::string resumo = pedido.gerarResumo();
+
+    CHECK(resumo.find("100") != std::string::npos);
+    CHECK(resumo.find("Calca Jeans") != std::string::npos);
+    CHECK(resumo.find("Pendente") != std::string::npos);
+}
+
