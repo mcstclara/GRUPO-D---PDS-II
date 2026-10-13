@@ -23,3 +23,18 @@ TEST_CASE("ProvadorVirtual: verifica se um tamanho é compatível") {
     CHECK(provador.tamanhoCompativel(cliente, camiseta, "P") == false);
     CHECK(provador.tamanhoCompativel(cliente, camiseta, "GG") == false);
 }
+
+TEST_CASE("ProvadorVirtual: encontra todos os tamanhos compatíveis") {
+    ProvadorVirtual provador;
+    Produto camiseta = criarCamiseta();
+
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    cliente.definirMedidas(165.0, 60.0, 90.0, 74.0, 96.0);
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::NORMAL);
+
+    std::vector<std::string> compativeis =
+        provador.encontrarTamanhosCompativeis(cliente, camiseta);
+    REQUIRE(compativeis.size() == 2);
+    CHECK(compativeis[0] == "M");
+    CHECK(compativeis[1] == "G");
+}
