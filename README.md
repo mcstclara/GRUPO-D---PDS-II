@@ -89,3 +89,20 @@ As principais classes definidas nesta etapa são:
 - `TrocaDevolucao`
 
 As especificações das funcionalidades do sistema estão descritas nas User Stories disponíveis no diretório `design/`.
+
+---
+
+## Como compilar e testar
+
+O projeto usa **C++11**, **Make** e o framework de testes **doctest** (já incluído em `tests/doctest.h`). Os comandos abaixo devem ser executados na raiz do repositório, em um terminal Linux, WSL ou Git Bash.
+
+| Comando | O que faz |
+|---|---|
+| `make` | Compila as classes de `src/` para a pasta `build/` |
+| `make test` | Compila e executa todos os testes de unidade de `tests/` |
+| `make coverage` | Recompila com instrumentação, executa os testes e mostra a cobertura do código com o gcovr (relatório em `build/cobertura/index.html`) |
+| `make clean` | Apaga os arquivos gerados na compilação |
+
+Para o `make coverage`, é necessário instalar o gcovr: `pip install gcovr`.
+
+> **Observação (Checkpoint C7):** os testes foram escritos seguindo TDD, antes da implementação. Por isso, nesta etapa a maioria deles ainda falha; eles passarão a ser atendidos com a implementação dos comportamentos no C8.
