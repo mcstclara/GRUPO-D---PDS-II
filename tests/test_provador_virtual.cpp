@@ -66,3 +66,15 @@ TEST_CASE("ProvadorVirtual: a preferência de caimento muda a recomendação") {
     cliente.definirPreferencia(Cliente::PreferenciaCaimento::SOLTO);
     CHECK(provador.recomendarTamanho(cliente, camiseta) == "M");
 }
+
+TEST_CASE("ProvadorVirtual: informa quando não há tamanho adequado") {
+    ProvadorVirtual provador;
+    Produto camiseta = criarCamiseta();
+
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    cliente.definirMedidas(185.0, 95.0, 110.0, 95.0, 115.0);
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::NORMAL);
+
+    CHECK(provador.encontrarTamanhosCompativeis(cliente, camiseta).empty());
+    CHECK(provador.recomendarTamanho(cliente, camiseta) == "");
+}
