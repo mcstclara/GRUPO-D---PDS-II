@@ -38,3 +38,31 @@ TEST_CASE("ProvadorVirtual: encontra todos os tamanhos compatíveis") {
     CHECK(compativeis[0] == "M");
     CHECK(compativeis[1] == "G");
 }
+
+TEST_CASE("ProvadorVirtual: recomenda o menor tamanho compatível") {
+    ProvadorVirtual provador;
+    Produto camiseta = criarCamiseta();
+
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    cliente.definirMedidas(165.0, 60.0, 90.0, 74.0, 96.0);
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::NORMAL);
+
+    CHECK(provador.recomendarTamanho(cliente, camiseta) == "M");
+}
+
+TEST_CASE("ProvadorVirtual: a preferência de caimento muda a recomendação") {
+    ProvadorVirtual provador;
+    Produto camiseta = criarCamiseta();
+
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    cliente.definirMedidas(165.0, 60.0, 86.0, 70.0, 92.0);
+
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::JUSTO);
+    CHECK(provador.recomendarTamanho(cliente, camiseta) == "P");
+
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::NORMAL);
+    CHECK(provador.recomendarTamanho(cliente, camiseta) == "M");
+
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::SOLTO);
+    CHECK(provador.recomendarTamanho(cliente, camiseta) == "M");
+}
