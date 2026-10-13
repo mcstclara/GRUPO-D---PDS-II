@@ -73,3 +73,18 @@ TEST_CASE("Cliente: altera a preferência de caimento") {
     CHECK(cliente.getPreferencia() == Cliente::PreferenciaCaimento::SOLTO);
 }
 
+TEST_CASE("Cliente: associa pedidos ao cliente") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK(cliente.getPedidos().empty());
+
+    Pedido pedido1(100, &cliente);
+    Pedido pedido2(101, &cliente);
+    cliente.adicionarPedido(&pedido1);
+    cliente.adicionarPedido(&pedido2);
+
+    std::vector<Pedido*> pedidos = cliente.getPedidos();
+    REQUIRE(pedidos.size() == 2);
+    CHECK(pedidos[0] == &pedido1);
+    CHECK(pedidos[1] == &pedido2);
+}
+
