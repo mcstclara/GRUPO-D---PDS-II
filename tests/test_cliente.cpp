@@ -23,3 +23,17 @@ TEST_CASE("Cliente: atualiza nome e e-mail") {
     CHECK(cliente.getNome() == "Ana Luisa");
     CHECK(cliente.getEmail() == "analuisa@email.com");
 }
+
+TEST_CASE("Cliente: cadastra endereços de entrega") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK(cliente.getEnderecos().empty());
+
+    cliente.adicionarEndereco("Av. Antonio Carlos, 6627 - Belo Horizonte");
+    cliente.adicionarEndereco("Rua da Bahia, 100 - Belo Horizonte");
+
+    std::vector<std::string> enderecos = cliente.getEnderecos();
+    REQUIRE(enderecos.size() == 2);
+    CHECK(enderecos[0] == "Av. Antonio Carlos, 6627 - Belo Horizonte");
+    CHECK(enderecos[1] == "Rua da Bahia, 100 - Belo Horizonte");
+}
+
