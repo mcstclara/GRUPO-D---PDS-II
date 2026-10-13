@@ -69,3 +69,23 @@ TEST_CASE("Carrinho: altera a quantidade de um produto") {
     CHECK(carrinho.calcularTotal() == doctest::Approx(75.0));
 }
 
+TEST_CASE("Carrinho: finalizar a compra gera um pedido e esvazia o carrinho") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Produto tenis(1, "Tenis Casual", "Calcados", 200.0, "Couro", "Basicos");
+    Carrinho carrinho(&cliente);
+    carrinho.adicionarProduto(&tenis, 2);
+
+    Pedido* pedido = carrinho.finalizarCompra();
+
+    REQUIRE(pedido != nullptr);
+    CHECK(pedido->getCliente() == &cliente);
+    REQUIRE(pedido->getProdutos().size() == 1);
+    CHECK(pedido->getProdutos()[0] == &tenis);
+    CHECK(pedido->getQuantidades()[0] == 2);
+    CHECK(pedido->calcularTotal() == doctest::Approx(400.0));
+
+    CHECK(carrinho.getProdutos().empty());
+
+    delete pedido;
+}
+
