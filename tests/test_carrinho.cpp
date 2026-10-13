@@ -40,3 +40,19 @@ TEST_CASE("Carrinho: adicionar o mesmo produto soma as quantidades") {
     REQUIRE(carrinho.getProdutos().size() == 1);
     CHECK(carrinho.getQuantidades()[0] == 3);
 }
+
+TEST_CASE("Carrinho: remove um produto") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Produto tenis(1, "Tenis Casual", "Calcados", 200.0, "Couro", "Basicos");
+    Produto meia(2, "Meia", "Acessorios", 15.0, "Algodao", "Basicos");
+    Carrinho carrinho(&cliente);
+    carrinho.adicionarProduto(&tenis, 1);
+    carrinho.adicionarProduto(&meia, 3);
+
+    carrinho.removerProduto(&tenis);
+
+    REQUIRE(carrinho.getProdutos().size() == 1);
+    CHECK(carrinho.getProdutos()[0] == &meia);
+    CHECK(carrinho.calcularTotal() == doctest::Approx(45.0));
+}
+
