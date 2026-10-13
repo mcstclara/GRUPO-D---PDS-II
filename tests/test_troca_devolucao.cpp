@@ -47,3 +47,40 @@ TEST_CASE("TrocaDevolucao: não é elegível quando o produto não está no pedi
     TrocaDevolucao solicitacao(&pedido, &saia, "Nao gostei");
     CHECK(solicitacao.verificarElegibilidade() == false);
 }
+
+TEST_CASE("TrocaDevolucao: solicita troca e devolução quando elegível") {
+    Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
+    Pedido pedido(100, nullptr);
+    pedido.adicionarProduto(&vestido, 1);
+    pedido.atualizarStatus("Entregue");
+
+    TrocaDevolucao troca(&pedido, &vestido, "Tamanho errado");
+    troca.solicitarTroca();
+    CHECK(troca.getStatus() == "Troca solicitada");
+
+    TrocaDevolucao devolucao(&pedido, &vestido, "Defeito");
+    devolucao.solicitarDevolucao();
+    CHECK(devolucao.getStatus() == "Devolucao solicitada");
+}
+
+TEST_CASE("TrocaDevolucao: recusa a solicitação quando não elegível") {
+    Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
+    Pedido pedido(100, nullptr);
+    pedido.adicionarProduto(&vestido, 1);
+
+    TrocaDevolucao solicitacao(&pedido, &vestido, "Tamanho errado");
+    solicitacao.solicitarTroca();
+    CHECK(solicitacao.getStatus() == "Recusada");
+}
+
+TEST_CASE("TrocaDevolucao: cancela uma solicitação") {
+    Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
+    Pedido pedido(100, nullptr);
+    pedido.adicionarProduto(&vestido, 1);
+    pedido.atualizarStatus("Entregue");
+
+    TrocaDevolucao solicitacao(&pedido, &vestido, "Tamanho errado");
+    solicitacao.solicitarTroca();
+    solicitacao.cancelarSolicitacao();
+    CHECK(solicitacao.getStatus() == "Cancelada");
+}
