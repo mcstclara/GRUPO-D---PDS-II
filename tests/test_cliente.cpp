@@ -58,3 +58,18 @@ TEST_CASE("Cliente: define as medidas corporais") {
     CHECK(cliente.getQuadril() == doctest::Approx(96.0));
 }
 
+TEST_CASE("Cliente: preferência de caimento padrão é NORMAL") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK(cliente.getPreferencia() == Cliente::PreferenciaCaimento::NORMAL);
+}
+
+TEST_CASE("Cliente: altera a preferência de caimento") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::JUSTO);
+    CHECK(cliente.getPreferencia() == Cliente::PreferenciaCaimento::JUSTO);
+
+    cliente.definirPreferencia(Cliente::PreferenciaCaimento::SOLTO);
+    CHECK(cliente.getPreferencia() == Cliente::PreferenciaCaimento::SOLTO);
+}
+
