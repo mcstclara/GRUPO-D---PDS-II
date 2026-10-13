@@ -56,3 +56,16 @@ TEST_CASE("Carrinho: remove um produto") {
     CHECK(carrinho.calcularTotal() == doctest::Approx(45.0));
 }
 
+TEST_CASE("Carrinho: altera a quantidade de um produto") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Produto meia(2, "Meia", "Acessorios", 15.0, "Algodao", "Basicos");
+    Carrinho carrinho(&cliente);
+    carrinho.adicionarProduto(&meia, 3);
+
+    carrinho.atualizarQuantidade(&meia, 5);
+
+    REQUIRE(carrinho.getQuantidades().size() == 1);
+    CHECK(carrinho.getQuantidades()[0] == 5);
+    CHECK(carrinho.calcularTotal() == doctest::Approx(75.0));
+}
+
