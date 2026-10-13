@@ -37,3 +37,24 @@ TEST_CASE("Cliente: cadastra endereços de entrega") {
     CHECK(enderecos[1] == "Rua da Bahia, 100 - Belo Horizonte");
 }
 
+TEST_CASE("Cliente: medidas começam zeradas") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+
+    CHECK(cliente.getAltura() == doctest::Approx(0.0));
+    CHECK(cliente.getPeso() == doctest::Approx(0.0));
+    CHECK(cliente.getPeito() == doctest::Approx(0.0));
+    CHECK(cliente.getCintura() == doctest::Approx(0.0));
+    CHECK(cliente.getQuadril() == doctest::Approx(0.0));
+}
+
+TEST_CASE("Cliente: define as medidas corporais") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    cliente.definirMedidas(165.0, 60.0, 90.0, 70.0, 96.0);
+
+    CHECK(cliente.getAltura() == doctest::Approx(165.0));
+    CHECK(cliente.getPeso() == doctest::Approx(60.0));
+    CHECK(cliente.getPeito() == doctest::Approx(90.0));
+    CHECK(cliente.getCintura() == doctest::Approx(70.0));
+    CHECK(cliente.getQuadril() == doctest::Approx(96.0));
+}
+
