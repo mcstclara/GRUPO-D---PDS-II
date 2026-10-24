@@ -10,27 +10,27 @@ Produto::Produto(int id,
       material(material), colecao(colecao) {}
 
 int Produto::getId() const {
-    return 0; 
+    return id;
 }
 
 std::string Produto::getNome() const {
-    return ""; 
+    return nome;
 }
 
 std::string Produto::getCategoria() const {
-    return ""; 
+    return categoria;
 }
 
 double Produto::getPreco() const {
-    return 0.0; 
+    return preco;
 }
 
 std::string Produto::getMaterial() const {
-    return ""; 
+    return material;
 }
 
 std::string Produto::getColecao() const {
-    return ""; 
+    return colecao;
 }
 
 void Produto::adicionarTamanho(const std::string& tamanho,
