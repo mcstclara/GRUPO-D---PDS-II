@@ -35,10 +35,14 @@ std::string Produto::getColecao() const {
 
 void Produto::adicionarTamanho(const std::string& tamanho,
                                const std::vector<double>& medidas) {
+    if (medidasPorTamanho.count(tamanho) == 0) {
+        tamanhos.push_back(tamanho);
+    }
+    medidasPorTamanho[tamanho] = medidas;
 }
 
 std::vector<std::string> Produto::getTamanhos() const {
-    return {}; 
+    return tamanhos;
 }
 
 std::vector<double> Produto::getMedidas(const std::string& tamanho) const {
