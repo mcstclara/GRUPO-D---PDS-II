@@ -17,6 +17,12 @@ void KitRoupas::adicionarProduto(Produto* produto) {
 }
 
 void KitRoupas::removerProduto(Produto* produto) {
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        if (produtos[i] == produto) {
+            produtos.erase(produtos.begin() + i);
+            return;
+        }
+    }
 }
 
 std::vector<Produto*> KitRoupas::getProdutos() const {
