@@ -14,10 +14,14 @@ void Estoque::adicionarUnidades(int produtoId, int quantidade) {
     quantidades[produtoId] += quantidade;
 }
 
-
 bool Estoque::removerUnidades(int produtoId, int quantidade) {
-    return false; // TODO (C8): implementar
+    if (consultarQuantidade(produtoId) < quantidade) {
+        return false;
+    }
+    quantidades[produtoId] -= quantidade;
+    return true;
 }
+
 
 bool Estoque::temQuantidadeSuficiente(int produtoId, int quantidade) const {
     return false; // TODO (C8): implementar
