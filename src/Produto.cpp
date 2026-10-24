@@ -46,7 +46,11 @@ std::vector<std::string> Produto::getTamanhos() const {
 }
 
 std::vector<double> Produto::getMedidas(const std::string& tamanho) const {
-    return {}; 
+    auto it = medidasPorTamanho.find(tamanho);
+    if (it == medidasPorTamanho.end()) {
+        return {};
+    }
+    return it->second;
 }
 
 bool Produto::temTamanho(const std::string& tamanho) const {
