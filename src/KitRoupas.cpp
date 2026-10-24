@@ -10,17 +10,21 @@ KitRoupas::KitRoupas(int id,
       desconto(desconto) {}
 
 void KitRoupas::adicionarProduto(Produto* produto) {
+    if (produto == nullptr) {
+        return;
+    }
+    produtos.push_back(produto);
 }
 
 void KitRoupas::removerProduto(Produto* produto) {
 }
 
 std::vector<Produto*> KitRoupas::getProdutos() const {
-    return {}; 
+    return produtos;
 }
 
 double KitRoupas::getDesconto() const {
-    return 0.0; 
+    return desconto;
 }
 
 double KitRoupas::getPreco() const {
