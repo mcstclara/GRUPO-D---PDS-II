@@ -54,5 +54,5 @@ std::vector<double> Produto::getMedidas(const std::string& tamanho) const {
 }
 
 bool Produto::temTamanho(const std::string& tamanho) const {
-    return false;
+    return medidasPorTamanho.count(tamanho) > 0;
 }
