@@ -10,10 +10,10 @@ int Estoque::consultarQuantidade(int produtoId) const {
     return it->second;
 }
 
-
 void Estoque::adicionarUnidades(int produtoId, int quantidade) {
-    // TODO (C8): implementar
+    quantidades[produtoId] += quantidade;
 }
+
 
 bool Estoque::removerUnidades(int produtoId, int quantidade) {
     return false; // TODO (C8): implementar
