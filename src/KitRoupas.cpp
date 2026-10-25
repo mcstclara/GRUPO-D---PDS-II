@@ -34,5 +34,9 @@ double KitRoupas::getDesconto() const {
 }
 
 double KitRoupas::getPreco() const {
-    return 0.0; 
+    double soma = 0.0;
+    for (Produto* produto : produtos) {
+        soma += produto->getPreco();
+    }
+    return soma * (1.0 - desconto / 100.0);
 }
