@@ -4,7 +4,8 @@
 TrocaDevolucao::TrocaDevolucao(Pedido* pedido,
                                Produto* produto,
                                const std::string& motivo)
-    : pedido(pedido), produto(produto), motivo(motivo), status("") {}
+    : pedido(pedido), produto(produto), motivo(motivo), status("Criada") {}
+
 
 bool TrocaDevolucao::verificarElegibilidade() const {
     return false;
@@ -20,20 +21,21 @@ void TrocaDevolucao::cancelarSolicitacao() {
 }
 
 Pedido* TrocaDevolucao::getPedido() const {
-    return nullptr;
+    return pedido;
 }
 
 Produto* TrocaDevolucao::getProduto() const {
-    return nullptr;
+    return produto;
 }
 
 std::string TrocaDevolucao::getMotivo() const {
-    return "";
+    return motivo;
 }
 
 std::string TrocaDevolucao::getStatus() const {
-    return "";
+    return status;
 }
 
 void TrocaDevolucao::atualizarStatus(const std::string& status) {
+    this->status = status;
 }
