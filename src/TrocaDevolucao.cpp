@@ -1,4 +1,5 @@
 #include "TrocaDevolucao.hpp"
+#include "Pedido.hpp"
 
 
 TrocaDevolucao::TrocaDevolucao(Pedido* pedido,
@@ -8,6 +9,17 @@ TrocaDevolucao::TrocaDevolucao(Pedido* pedido,
 
 
 bool TrocaDevolucao::verificarElegibilidade() const {
+    if (pedido == nullptr || produto == nullptr) {
+        return false;
+    }
+    if (pedido->getStatus() != "Entregue") {
+        return false;
+    }
+    for (Produto* p : pedido->getProdutos()) {
+        if (p == produto) {
+            return true;
+        }
+    }
     return false;
 }
 
