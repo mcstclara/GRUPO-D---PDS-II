@@ -24,6 +24,11 @@ bool TrocaDevolucao::verificarElegibilidade() const {
 }
 
 void TrocaDevolucao::solicitarTroca() {
+    if (verificarElegibilidade()) {
+        atualizarStatus("Troca solicitada");
+    } else {
+        atualizarStatus("Recusada");
+    }
 }
 
 void TrocaDevolucao::solicitarDevolucao() {
