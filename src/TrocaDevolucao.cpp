@@ -32,6 +32,11 @@ void TrocaDevolucao::solicitarTroca() {
 }
 
 void TrocaDevolucao::solicitarDevolucao() {
+    if (verificarElegibilidade()) {
+        atualizarStatus("Devolucao solicitada");
+    } else {
+        atualizarStatus("Recusada");
+    }
 }
 
 void TrocaDevolucao::cancelarSolicitacao() {
