@@ -40,6 +40,7 @@ void TrocaDevolucao::solicitarDevolucao() {
 }
 
 void TrocaDevolucao::cancelarSolicitacao() {
+    atualizarStatus("Cancelada");
 }
 
 Pedido* TrocaDevolucao::getPedido() const {
