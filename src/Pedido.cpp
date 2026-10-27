@@ -1,5 +1,6 @@
 #include "Pedido.hpp"
 #include "Produto.hpp"
+#include <sstream>
 
 Pedido::Pedido(int id, Cliente* cliente)
     : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
@@ -42,5 +43,13 @@ void Pedido::atualizarStatus(const std::string& status) {
 }
 
 std::string Pedido::gerarResumo() const {
-    return ""; // TODO implementar no C8
+    std::ostringstream resumo;
+    resumo << "Pedido " << id << "\n";
+    resumo << "Status: " << status << "\n";
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        resumo << quantidades[i] << "x " << produtos[i]->getNome()
+               << " - R$ " << produtos[i]->getPreco() * quantidades[i] << "\n";
+    }
+    resumo << "Total: R$ " << calcularTotal() << "\n";
+    return resumo.str();
 }
