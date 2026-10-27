@@ -1,4 +1,5 @@
 #include "Pedido.hpp"
+#include "Produto.hpp"
 
 Pedido::Pedido(int id, Cliente* cliente)
     : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
@@ -9,7 +10,11 @@ void Pedido::adicionarProduto(Produto* produto, int quantidade) {
 }
 
 double Pedido::calcularTotal() const {
-    return 0.0; // TODO implementar no C8
+    double total = 0.0;
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        total += produtos[i]->getPreco() * quantidades[i];
+    }
+    return total;
 }
 
 int Pedido::getId() const {
