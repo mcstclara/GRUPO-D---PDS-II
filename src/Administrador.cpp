@@ -1,7 +1,7 @@
 #include "Administrador.hpp"
+#include "Estoque.hpp"
 
-// Esqueleto (stub) criado no C7 para os testes compilarem.
-// Os comportamentos reais serão implementados no C8.
+
 
 Administrador::Administrador(int id,
                              const std::string& nome,
@@ -34,7 +34,14 @@ void Administrador::removerProduto(Produto* produto) {
 }
 
 void Administrador::atualizarEstoque(Estoque* estoque, int produtoId, int quantidade) {
-    // TODO (C8): implementar
+    if (estoque == nullptr) {
+        return;
+    }
+    if (quantidade > 0) {
+        estoque->adicionarUnidades(produtoId, quantidade);
+    } else {
+        estoque->removerUnidades(produtoId, -quantidade);
+    }
 }
 
 void Administrador::atualizarStatusPedido(Pedido* pedido, const std::string& status) {
