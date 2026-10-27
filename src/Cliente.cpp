@@ -49,24 +49,25 @@ void Cliente::definirMedidas(double altura,
 }
 
 double Cliente::getAltura() const {
-    return -1.0; // TODO (C8): implementar
+    return altura;
 }
 
 double Cliente::getPeso() const {
-    return -1.0; // TODO (C8): implementar
+    return peso;
 }
 
 double Cliente::getPeito() const {
-    return -1.0; // TODO (C8): implementar
+    return peito;
 }
 
 double Cliente::getCintura() const {
-    return -1.0; // TODO (C8): implementar
+    return cintura;
 }
 
 double Cliente::getQuadril() const {
-    return -1.0; // TODO (C8): implementar
+    return quadril;
 }
+
 
 void Cliente::definirPreferencia(PreferenciaCaimento preferencia) {
     // TODO (C8): implementar
