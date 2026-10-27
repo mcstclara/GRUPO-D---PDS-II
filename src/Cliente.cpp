@@ -45,7 +45,11 @@ void Cliente::definirMedidas(double altura,
                              double peito,
                              double cintura,
                              double quadril) {
-    // TODO (C8): implementar
+    this->altura = altura;
+    this->peso = peso;
+    this->peito = peito;
+    this->cintura = cintura;
+    this->quadril = quadril;
 }
 
 double Cliente::getAltura() const {
