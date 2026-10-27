@@ -1,7 +1,7 @@
 #include "Pedido.hpp"
 
 Pedido::Pedido(int id, Cliente* cliente)
-    : id(id), cliente(cliente), valorTotal(0.0), status("") {}
+    : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
 
 void Pedido::adicionarProduto(Produto* produto, int quantidade) {
     // TODO implementar no C8
