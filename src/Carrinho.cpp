@@ -3,7 +3,8 @@
 Carrinho::Carrinho(Cliente* cliente) : cliente(cliente) {}
 
 void Carrinho::adicionarProduto(Produto* produto, int quantidade) {
-    // TODO implementar no C8
+    produtos.push_back(produto);
+    quantidades.push_back(quantidade);
 }
 
 void Carrinho::removerProduto(Produto* produto) {
@@ -19,12 +20,13 @@ double Carrinho::calcularTotal() const {
 }
 
 std::vector<Produto*> Carrinho::getProdutos() const {
-    return {}; // TODO implementar no C8
+    return produtos;
 }
 
 std::vector<int> Carrinho::getQuantidades() const {
-    return {}; // TODO implementar no C8
+    return quantidades;
 }
+
 
 Pedido* Carrinho::finalizarCompra() {
     return nullptr; // TODO implementar no C8
