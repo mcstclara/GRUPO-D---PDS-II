@@ -4,7 +4,8 @@ Pedido::Pedido(int id, Cliente* cliente)
     : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
 
 void Pedido::adicionarProduto(Produto* produto, int quantidade) {
-    // TODO implementar no C8
+    produtos.push_back(produto);
+    quantidades.push_back(quantidade);
 }
 
 double Pedido::calcularTotal() const {
@@ -20,11 +21,11 @@ Cliente* Pedido::getCliente() const {
 }
 
 std::vector<Produto*> Pedido::getProdutos() const {
-    return {}; // TODO implementar no C8
+    return produtos;
 }
 
 std::vector<int> Pedido::getQuantidades() const {
-    return {}; // TODO implementar no C8
+    return quantidades;
 }
 
 std::string Pedido::getStatus() const {
