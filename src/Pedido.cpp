@@ -12,11 +12,11 @@ double Pedido::calcularTotal() const {
 }
 
 int Pedido::getId() const {
-    return 0; // TODO implementar no C8
+    return id;
 }
 
 Cliente* Pedido::getCliente() const {
-    return nullptr; // TODO implementar no C8
+    return cliente;
 }
 
 std::vector<Produto*> Pedido::getProdutos() const {
