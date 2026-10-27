@@ -1,9 +1,21 @@
 #include "ProvadorVirtual.hpp"
+#include "Cliente.hpp"
+#include "Produto.hpp"
 
-// Esqueleto (stub) criado no C7 para os testes compilarem.
-// Os comportamentos reais serão implementados no C8.
+static double folgaMinima(Cliente::PreferenciaCaimento preferencia) {
+    switch (preferencia) {
+        case Cliente::PreferenciaCaimento::JUSTO:
+            return 0.0;
+        case Cliente::PreferenciaCaimento::NORMAL:
+            return 4.0;
+        case Cliente::PreferenciaCaimento::SOLTO:
+            return 10.0;
+    }
+    return 0.0;
+}
 
 ProvadorVirtual::ProvadorVirtual() {}
+
 
 std::string ProvadorVirtual::recomendarTamanho(const Cliente& cliente,
                                                const Produto& produto) const {
