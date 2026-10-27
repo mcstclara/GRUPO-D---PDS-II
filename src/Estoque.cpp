@@ -31,6 +31,11 @@ bool Estoque::temQuantidadeSuficiente(int produtoId, int quantidade) const {
     }
 }
 
+
 bool Estoque::estaEsgotado(int produtoId) const {
-    return false; // TODO (C8): implementar
+    if (consultarQuantidade(produtoId) == 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
