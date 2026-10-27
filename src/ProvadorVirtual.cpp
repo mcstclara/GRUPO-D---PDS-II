@@ -38,5 +38,11 @@ bool ProvadorVirtual::tamanhoCompativel(const Cliente& cliente,
 std::vector<std::string> ProvadorVirtual::encontrarTamanhosCompativeis(
     const Cliente& cliente,
     const Produto& produto) const {
-    return {}; // TODO (C8): implementar
+    std::vector<std::string> compativeis;
+    for (const std::string& tamanho : produto.getTamanhos()) {
+        if (tamanhoCompativel(cliente, produto, tamanho)) {
+            compativeis.push_back(tamanho);
+        }
+    }
+    return compativeis;
 }
