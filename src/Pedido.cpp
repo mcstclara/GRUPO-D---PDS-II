@@ -28,11 +28,11 @@ std::vector<int> Pedido::getQuantidades() const {
 }
 
 std::string Pedido::getStatus() const {
-    return ""; // TODO implementar no C8
+    return status;
 }
 
 void Pedido::atualizarStatus(const std::string& status) {
-    // TODO implementar no C8
+    this->status = status;
 }
 
 std::string Pedido::gerarResumo() const {
