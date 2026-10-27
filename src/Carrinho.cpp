@@ -1,4 +1,5 @@
 #include "Carrinho.hpp"
+#include "Produto.hpp"
 
 Carrinho::Carrinho(Cliente* cliente) : cliente(cliente) {}
 
@@ -21,7 +22,11 @@ void Carrinho::atualizarQuantidade(Produto* produto, int quantidade) {
 }
 
 double Carrinho::calcularTotal() const {
-    return 0.0; // TODO implementar no C8
+    double total = 0.0;
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        total += produtos[i]->getPreco() * quantidades[i];
+    }
+    return total;
 }
 
 std::vector<Produto*> Carrinho::getProdutos() const {
