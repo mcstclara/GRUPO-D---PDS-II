@@ -24,7 +24,11 @@ bool Estoque::removerUnidades(int produtoId, int quantidade) {
 
 
 bool Estoque::temQuantidadeSuficiente(int produtoId, int quantidade) const {
-    return false; // TODO (C8): implementar
+    if (consultarQuantidade(produtoId) >= quantidade) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool Estoque::estaEsgotado(int produtoId) const {
