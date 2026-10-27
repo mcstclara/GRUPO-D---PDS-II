@@ -3,7 +3,12 @@
 Carrinho::Carrinho(Cliente* cliente) : cliente(cliente) {}
 
 void Carrinho::adicionarProduto(Produto* produto, int quantidade) {
-    produtos.push_back(produto);
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        if (produtos[i] == produto) {
+            quantidades[i] += quantidade;
+            return;
+        }
+    }
     quantidades.push_back(quantidade);
 }
 
