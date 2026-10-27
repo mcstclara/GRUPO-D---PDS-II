@@ -21,15 +21,15 @@ std::string Cliente::getEmail() const {
 }
 
 void Cliente::atualizarNome(const std::string& nome) {
-    // TODO (C8): implementar
+    this->nome = nome;
 }
 
 void Cliente::atualizarEmail(const std::string& email) {
-    // TODO (C8): implementar
+    this->email = email;
 }
 
 void Cliente::atualizarSenha(const std::string& senha) {
-    // TODO (C8): implementar
+    this->senha = senha;
 }
 
 void Cliente::adicionarEndereco(const std::string& endereco) {
