@@ -25,7 +25,14 @@ std::string ProvadorVirtual::recomendarTamanho(const Cliente& cliente,
 bool ProvadorVirtual::tamanhoCompativel(const Cliente& cliente,
                                         const Produto& produto,
                                         const std::string& tamanho) const {
-    return false; // TODO (C8): implementar
+    std::vector<double> medidas = produto.getMedidas(tamanho);
+    if (medidas.size() < 3) {
+        return false;
+    }
+    double folga = folgaMinima(cliente.getPreferencia());
+    return medidas[0] - cliente.getPeito() >= folga &&
+           medidas[1] - cliente.getCintura() >= folga &&
+           medidas[2] - cliente.getQuadril() >= folga;
 }
 
 std::vector<std::string> ProvadorVirtual::encontrarTamanhosCompativeis(
