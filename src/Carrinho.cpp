@@ -14,7 +14,13 @@ void Carrinho::adicionarProduto(Produto* produto, int quantidade) {
 }
 
 void Carrinho::removerProduto(Produto* produto) {
-    // TODO implementar no C8
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        if (produtos[i] == produto) {
+            produtos.erase(produtos.begin() + i);
+            quantidades.erase(quantidades.begin() + i);
+            return;
+        }
+    }
 }
 
 void Carrinho::atualizarQuantidade(Produto* produto, int quantidade) {
