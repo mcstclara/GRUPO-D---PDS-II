@@ -82,9 +82,9 @@ Cliente::PreferenciaCaimento Cliente::getPreferencia() const {
 }
 
 void Cliente::adicionarPedido(Pedido* pedido) {
-    // TODO (C8): implementar
+    pedidos.push_back(pedido);
 }
 
 std::vector<Pedido*> Cliente::getPedidos() const {
-    return {}; // TODO (C8): implementar
+    return pedidos;
 }
