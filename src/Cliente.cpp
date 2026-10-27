@@ -33,11 +33,11 @@ void Cliente::atualizarSenha(const std::string& senha) {
 }
 
 void Cliente::adicionarEndereco(const std::string& endereco) {
-    // TODO (C8): implementar
+    enderecos.push_back(endereco);
 }
 
 std::vector<std::string> Cliente::getEnderecos() const {
-    return {}; // TODO (C8): implementar
+    return enderecos;
 }
 
 void Cliente::definirMedidas(double altura,
