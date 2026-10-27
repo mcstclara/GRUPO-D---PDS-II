@@ -1,8 +1,5 @@
 #include "Cliente.hpp"
 
-// Esqueleto (stub) criado no C7 para os testes compilarem.
-// Os comportamentos reais serão implementados no C8.
-
 Cliente::Cliente(int id,
                  const std::string& nome,
                  const std::string& email,
@@ -12,15 +9,15 @@ Cliente::Cliente(int id,
       preferencia(PreferenciaCaimento::NORMAL) {}
 
 int Cliente::getId() const {
-    return 0; // TODO (C8): implementar
+    return id;
 }
 
 std::string Cliente::getNome() const {
-    return ""; // TODO (C8): implementar
+    return nome;
 }
 
 std::string Cliente::getEmail() const {
-    return ""; // TODO (C8): implementar
+    return email;
 }
 
 void Cliente::atualizarNome(const std::string& nome) {
