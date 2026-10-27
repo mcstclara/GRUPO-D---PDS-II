@@ -78,7 +78,7 @@ void Cliente::definirPreferencia(PreferenciaCaimento preferencia) {
 }
 
 Cliente::PreferenciaCaimento Cliente::getPreferencia() const {
-    return PreferenciaCaimento::JUSTO; // TODO (C8): implementar
+    return preferencia;
 }
 
 void Cliente::adicionarPedido(Pedido* pedido) {
