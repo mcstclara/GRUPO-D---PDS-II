@@ -24,7 +24,12 @@ void Carrinho::removerProduto(Produto* produto) {
 }
 
 void Carrinho::atualizarQuantidade(Produto* produto, int quantidade) {
-    // TODO implementar no C8
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        if (produtos[i] == produto) {
+            quantidades[i] = quantidade;
+            return;
+        }
+    }
 }
 
 double Carrinho::calcularTotal() const {
