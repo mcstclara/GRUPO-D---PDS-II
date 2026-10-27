@@ -19,7 +19,11 @@ ProvadorVirtual::ProvadorVirtual() {}
 
 std::string ProvadorVirtual::recomendarTamanho(const Cliente& cliente,
                                                const Produto& produto) const {
-    return "?"; // TODO (C8): implementar
+    std::vector<std::string> compativeis = encontrarTamanhosCompativeis(cliente, produto);
+    if (compativeis.empty()) {
+        return "";
+    }
+    return compativeis[0];
 }
 
 bool ProvadorVirtual::tamanhoCompativel(const Cliente& cliente,
