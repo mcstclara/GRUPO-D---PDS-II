@@ -74,7 +74,7 @@ double Cliente::getQuadril() const {
 
 
 void Cliente::definirPreferencia(PreferenciaCaimento preferencia) {
-    // TODO (C8): implementar
+    this->preferencia = preferencia;
 }
 
 Cliente::PreferenciaCaimento Cliente::getPreferencia() const {
