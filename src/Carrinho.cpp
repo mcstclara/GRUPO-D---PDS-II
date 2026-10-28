@@ -1,5 +1,7 @@
 #include "Carrinho.hpp"
 #include "Produto.hpp"
+#include "Cliente.hpp"
+#include "Pedido.hpp"
 
 Carrinho::Carrinho(Cliente* cliente) : cliente(cliente) {}
 
@@ -10,6 +12,7 @@ void Carrinho::adicionarProduto(Produto* produto, int quantidade) {
             return;
         }
     }
+    produtos.push_back(produto); 
     quantidades.push_back(quantidade);
 }
 
@@ -48,7 +51,17 @@ std::vector<int> Carrinho::getQuantidades() const {
     return quantidades;
 }
 
-
 Pedido* Carrinho::finalizarCompra() {
-    return nullptr; // TODO implementar no C8
+    static int proximoId = 1;
+    Pedido* pedido = new Pedido(proximoId, cliente);
+    proximoId++;
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        pedido->adicionarProduto(produtos[i], quantidades[i]);
+    }
+    if (cliente != nullptr) {
+        cliente->adicionarPedido(pedido);
+    }
+    produtos.clear();
+    quantidades.clear();
+    return pedido;
 }
