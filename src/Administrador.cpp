@@ -51,8 +51,17 @@ for (size_t i = 0; i < produtos.size(); i++) {
 }
 
 void Administrador::removerProduto(Produto* produto) {
-    // TODO (C8): implementar
+    if (produto == nullptr){
+        return;
+    }
+    for (size_t i = 0; i<produtos.size(); i++){
+        if (produtos[i]->getId() == produto->getId()){
+            produtos.erase(produtos.begin() + i);
+        return;
+        }
+    }
 }
+
 
 void Administrador::atualizarEstoque(Estoque* estoque, int produtoId, int quantidade) {
     if (estoque == nullptr) {
