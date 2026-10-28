@@ -27,7 +27,15 @@ std::vector<Produto*> Administrador::getProdutos() const {
 }
 
 void Administrador::cadastrarProduto(Produto* produto) {
-    // TODO (C8): implementar
+    if (produto == nullptr) {
+        return;
+    }
+    for (Produto* p : produtos) {
+        if (p->getId() == produto->getId()) {
+            return;
+        }
+    }
+    produtos.push_back(produto);
 }
 
 void Administrador::atualizarProduto(Produto* produto) {
