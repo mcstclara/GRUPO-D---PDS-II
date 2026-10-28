@@ -45,5 +45,10 @@ void Administrador::atualizarEstoque(Estoque* estoque, int produtoId, int quanti
 }
 
 void Administrador::atualizarStatusPedido(Pedido* pedido, const std::string& status) {
-    // TODO (C8): implementar
+    if (pedido == nullptr){
+        return; 
+    }
+    if (pedido->getStatus() != status){
+        pedido->atualizarStatus(status);
+    }
 }
