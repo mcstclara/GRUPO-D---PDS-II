@@ -1,5 +1,6 @@
 #include "Administrador.hpp"
 #include "Estoque.hpp"
+#include "Produto.hpp"
 
 
 
@@ -19,6 +20,10 @@ std::string Administrador::getNome() const {
 
 std::string Administrador::getEmail() const {
     return email;
+}
+
+std::vector<Produto*> Administrador::getProdutos() const {
+    return produtos;
 }
 
 void Administrador::cadastrarProduto(Produto* produto) {

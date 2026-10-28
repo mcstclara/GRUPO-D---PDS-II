@@ -2,6 +2,7 @@
 #define ADMINISTRADOR_HPP
 
 #include <string>
+#include <vector>
 
 #include "Pedido.hpp"
 
@@ -20,6 +21,7 @@ private:
     std::string nome;
     std::string email;
     std::string senha;
+    std::vector<Produto*> produtos;
 
 public:
     /**
@@ -55,6 +57,14 @@ public:
      * @return E-mail do administrador.
      */
     std::string getEmail() const;
+
+    /**
+     * @brief Retorna os produtos cadastrados no catálogo da loja.
+     *
+     * @return Lista de produtos cadastrados.
+     */
+    std::vector<Produto*> getProdutos() const;
+
 
     /**
      * @brief Cadastra um produto na loja.
