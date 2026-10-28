@@ -39,7 +39,15 @@ void Administrador::cadastrarProduto(Produto* produto) {
 }
 
 void Administrador::atualizarProduto(Produto* produto) {
-    // TODO (C8): implementar
+    if (produto == nullptr){
+return;
+}
+for (size_t i = 0; i < produtos.size(); i++) {
+   if (produtos[i]->getId() == produto->getId()){
+   produtos[i] = produto;
+   return;
+}
+}
 }
 
 void Administrador::removerProduto(Produto* produto) {
