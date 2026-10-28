@@ -10,15 +10,15 @@ Administrador::Administrador(int id,
     : id(id), nome(nome), email(email), senha(senha) {}
 
 int Administrador::getId() const {
-    return 0; // TODO (C8): implementar
+    return id;
 }
 
 std::string Administrador::getNome() const {
-    return ""; // TODO (C8): implementar
+    return nome;
 }
 
 std::string Administrador::getEmail() const {
-    return ""; // TODO (C8): implementar
+    return email;
 }
 
 void Administrador::cadastrarProduto(Produto* produto) {
