@@ -1,4 +1,5 @@
 #include "Estoque.hpp"
+#include <stdexcept>
 
 Estoque::Estoque() {}
 
@@ -11,11 +12,19 @@ int Estoque::consultarQuantidade(int produtoId) const {
 }
 
 void Estoque::adicionarUnidades(int produtoId, int quantidade) {
+    if (quantidade <= 0){
+     throw std::invalid_argument("A quantidade e invalida");
+    }
+    else {
     quantidades[produtoId] += quantidade;
+    }
 }
 
 bool Estoque::removerUnidades(int produtoId, int quantidade) {
-    if (consultarQuantidade(produtoId) < quantidade) {
+    if(quantidade <= 0){
+        throw std::invalid_argument("A quantidade e invalida");
+    }
+    else if (consultarQuantidade(produtoId) < quantidade) {
         return false;
     }
     quantidades[produtoId] -= quantidade;

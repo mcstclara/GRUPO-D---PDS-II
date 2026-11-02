@@ -1,5 +1,6 @@
 #include "doctest.h"
 #include "Estoque.hpp"
+#include <stdexcept>
 
 TEST_CASE("Estoque: produto nunca cadastrado tem quantidade zero") {
     Estoque estoque;
@@ -58,4 +59,12 @@ TEST_CASE("Estoque: identifica produtos esgotados") {
 
     estoque.removerUnidades(1, 2);
     CHECK(estoque.estaEsgotado(1) == true);
+}
+
+TEST_CASE("Estoque: verifica se a quantidade é válida") {
+    Estoque estoque; 
+    CHECK_THROWS_AS (estoque.adicionarUnidades(1,0), std::invalid_argument); 
+    CHECK_THROWS_AS (estoque.adicionarUnidades(1,-5), std::invalid_argument);
+    CHECK_THROWS_AS (estoque.removerUnidades(1, -5), std::invalid_argument);
+
 }
