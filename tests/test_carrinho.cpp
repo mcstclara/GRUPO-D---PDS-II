@@ -4,6 +4,8 @@
 #include "Pedido.hpp"
 #include "Produto.hpp"
 
+#include <stdexcept>
+
 TEST_CASE("Carrinho: começa vazio") {
     Cliente cliente(1, "Ana", "ana@email.com", "senha123");
     Carrinho carrinho(&cliente);
@@ -87,5 +89,18 @@ TEST_CASE("Carrinho: finalizar a compra gera um pedido e esvazia o carrinho") {
     CHECK(carrinho.getProdutos().empty());
 
     delete pedido;
+}
+
+TEST_CASE("Carrinho: recusa produtos vazios e quantidades inválidas") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Produto meia(2, "Meia", "Acessorios", 15.0, "Algodao", "Basicos");
+    Carrinho carrinho(&cliente);
+    CHECK_THROWS_AS(carrinho.adicionarProduto(nullptr, 1), std::invalid_argument);
+    CHECK_THROWS_AS(carrinho.adicionarProduto(&meia, 0), std::invalid_argument);
+    CHECK_THROWS_AS(carrinho.atualizarQuantidade(&meia, 2), std::invalid_argument);
+    carrinho.adicionarProduto(&meia, 1);
+    CHECK_THROWS_AS(carrinho.atualizarQuantidade(&meia, -1), std::invalid_argument);
+    REQUIRE(carrinho.getQuantidades().size() == 1);
+    CHECK(carrinho.getQuantidades()[0] == 1);
 }
 
