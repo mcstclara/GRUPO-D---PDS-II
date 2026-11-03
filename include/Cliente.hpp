@@ -159,7 +159,15 @@ public:
      *
      * @return Medida do quadril.
      */
-    double getQuadril() const;
+        double getQuadril() const;
+
+    /**
+     * @brief Informa se o cliente já cadastrou as medidas usadas pelo provador.
+     *
+     * @return true se peito, cintura e quadril forem maiores que zero.
+     */
+    bool temMedidas() const;
+
 
     /**
      * @brief Define a preferência de caimento do cliente.

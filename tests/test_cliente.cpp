@@ -106,3 +106,17 @@ TEST_CASE("Cliente: atualizações inválidas não mudam os dados") {
     CHECK(cliente.getNome() == "Ana");
     CHECK(cliente.getEmail() == "ana@email.com");
 }
+
+TEST_CASE("Cliente: recusa medidas e endereço inválidos") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK(cliente.temMedidas() == false);
+    CHECK_THROWS_AS(cliente.definirMedidas(165.0, 60.0, -90.0, 70.0, 96.0),
+                    std::invalid_argument);
+    CHECK_THROWS_AS(cliente.definirMedidas(0.0, 60.0, 90.0, 70.0, 96.0),
+                    std::invalid_argument);
+    CHECK(cliente.temMedidas() == false);
+    cliente.definirMedidas(165.0, 60.0, 90.0, 70.0, 96.0);
+    CHECK(cliente.temMedidas() == true);
+    CHECK_THROWS_AS(cliente.adicionarEndereco(""), std::invalid_argument);
+    CHECK(cliente.getEnderecos().empty());
+}

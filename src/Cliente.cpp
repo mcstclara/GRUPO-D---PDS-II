@@ -62,11 +62,13 @@ void Cliente::atualizarSenha(const std::string& senha) {
     this->senha = senha;
 }
 
-
-
 void Cliente::adicionarEndereco(const std::string& endereco) {
+    if (endereco.empty()) {
+        throw std::invalid_argument("O endereco nao pode ser vazio.");
+    }
     enderecos.push_back(endereco);
 }
+
 
 std::vector<std::string> Cliente::getEnderecos() const {
     return enderecos;
@@ -76,7 +78,11 @@ void Cliente::definirMedidas(double altura,
                              double peso,
                              double peito,
                              double cintura,
-                             double quadril) {
+                            double quadril) {
+    if (altura <= 0.0 || peso <= 0.0 || peito <= 0.0 ||
+        cintura <= 0.0 || quadril <= 0.0) {
+        throw std::invalid_argument("As medidas devem ser maiores que zero.");
+    }
     this->altura = altura;
     this->peso = peso;
     this->peito = peito;
@@ -102,6 +108,10 @@ double Cliente::getCintura() const {
 
 double Cliente::getQuadril() const {
     return quadril;
+}
+
+bool Cliente::temMedidas() const {
+    return peito > 0.0 && cintura > 0.0 && quadril > 0.0;
 }
 
 
