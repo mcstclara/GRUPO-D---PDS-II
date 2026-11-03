@@ -3,9 +3,17 @@
 #include "Cliente.hpp"
 #include "Pedido.hpp"
 
+#include <stdexcept>
+
 Carrinho::Carrinho(Cliente* cliente) : cliente(cliente) {}
 
 void Carrinho::adicionarProduto(Produto* produto, int quantidade) {
+    if(produto == nullptr){
+        throw std::invalid_argument("Produto vazio nao pode ser posto no carrinho!");
+    }
+    if (quantidade <= 0){
+        throw std::invalid_argument("A quantidade deve ser maior que zero!");
+    }
     for (std::size_t i = 0; i < produtos.size(); i++) {
         if (produtos[i] == produto) {
             quantidades[i] += quantidade;
@@ -27,12 +35,16 @@ void Carrinho::removerProduto(Produto* produto) {
 }
 
 void Carrinho::atualizarQuantidade(Produto* produto, int quantidade) {
+    if(quantidade <= 0){
+        throw std::invalid_argument("A quantidade deve ser maior que zero!");
+    }
     for (std::size_t i = 0; i < produtos.size(); i++) {
         if (produtos[i] == produto) {
             quantidades[i] = quantidade;
             return;
         }
     }
+    throw std::invalid_argument("Este produto nao esta no carrinho.");
 }
 
 double Carrinho::calcularTotal() const {
