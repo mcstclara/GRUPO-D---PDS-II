@@ -98,11 +98,32 @@ O projeto usa **C++11**, **Make** e o framework de testes **doctest** (já inclu
 
 | Comando | O que faz |
 |---|---|
-| `make` | Compila as classes de `src/` para a pasta `build/` |
+| `make` | Compila as classes de `src/` e o programa da loja (`build/loja`) |
+| `make run` | Compila e abre o programa da loja no terminal |
 | `make test` | Compila e executa todos os testes de unidade de `tests/` |
 | `make coverage` | Recompila com instrumentação, executa os testes e mostra a cobertura do código com o gcovr (relatório em `build/cobertura/index.html`) |
 | `make clean` | Apaga os arquivos gerados na compilação |
 
 Para o `make coverage`, é necessário instalar o gcovr: `pip install gcovr`.
 
-> **Observação (Checkpoint C7):** os testes foram escritos seguindo TDD, antes da implementação. Por isso, nesta etapa a maioria deles ainda falha; eles passarão a ser atendidos com a implementação dos comportamentos no C8.
+---
+
+## Como usar o programa
+
+Na raiz do repositório, rode `make run` (no Windows, `mingw32-make run` no Git Bash). O programa lê o catálogo inicial de `data/produtos.txt` e abre o menu principal:
+
+- **Catálogo:** ver os produtos, buscar por nome, filtrar por categoria e montar kits com desconto.
+- **Minha conta:** criar conta, entrar, cadastrar endereço, medidas e preferência de caimento.
+- **Provador virtual:** recomendação de tamanho a partir das medidas.
+- **Carrinho:** adicionar, remover, alterar quantidades e finalizar a compra. A compra gera o arquivo `pedido_N.txt` com o resumo e os cuidados com as peças.
+- **Meus pedidos** e **Trocas e devoluções**.
+- **Área do administrador:** estoque, status dos pedidos e cadastro de produtos.
+
+O arquivo `data/produtos.txt` tem um produto por linha, no formato `id;nome;categoria;preco;material;colecao;quantidade;tamanhos`. Cada tamanho é escrito como `TAMANHO=peito,cintura,quadril`, e os tamanhos são separados por `|`.
+
+### Programação defensiva e exceções (C9)
+
+- As classes de `src/` validam os dados recebidos e lançam `std::invalid_argument` ou `std::logic_error` quando algo é inválido.
+- Os erros das regras da loja usam a hierarquia de `include/Excecoes.hpp` (`ErroLoja` e suas classes filhas).
+- A interface (pasta `app/`) lê todas as entradas com as funções de `app/Entrada.hpp`, que repetem a pergunta até o valor ser válido.
+- O `main` trata as exceções, então um erro de digitação mostra uma mensagem em vez de fechar o programa.

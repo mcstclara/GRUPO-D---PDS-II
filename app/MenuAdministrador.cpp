@@ -86,6 +86,27 @@ static void atualizarStatus(Loja& loja) {
     std::cout << "Pedido " << pedidoId << " agora esta: " << pedido->getStatus() << ".\n";
 }
 
+static void cadastrarProduto(Loja& loja) {
+    std::string nome = lerTexto("Nome: ");
+    std::string categoria = lerTexto("Categoria: ");
+    double preco = lerDecimal("Preco (R$): ", 0.0, 100000.0);
+    std::string material = lerTexto("Material: ");
+    std::string colecao = lerTexto("Colecao: ");
+    int quantidade = lerInteiro("Quantidade inicial no estoque: ", 0, 1000);
+    Produto* produto = new Produto(loja.gerarIdProduto(), nome, categoria,
+                                   preco, material, colecao);
+    loja.adicionarProduto(produto, quantidade);
+    while (lerSimNao("Adicionar um tamanho?")) {
+        std::string tamanho = lerTexto("Tamanho (ex.: P, M, 38): ");
+        double peito = lerDecimal("Peito (cm): ", 1.0, 300.0);
+        double cintura = lerDecimal("Cintura (cm): ", 1.0, 300.0);
+        double quadril = lerDecimal("Quadril (cm): ", 1.0, 300.0);
+        produto->adicionarTamanho(tamanho, {peito, cintura, quadril});
+    }
+    std::cout << "Produto " << produto->getId() << " (" << produto->getNome()
+              << ") cadastrado.\n";
+}
+
 void menuAdministrador(Loja& loja) {
 
     while (true) {
@@ -108,7 +129,7 @@ void menuAdministrador(Loja& loja) {
         } else if (opcao == 4) {
             atualizarStatus(loja);
         } else {
-            std::cout << "Em construcao.\n";
+            cadastrarProduto(loja);
         }
     }
 }
