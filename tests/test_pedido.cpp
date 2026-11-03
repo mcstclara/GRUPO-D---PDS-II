@@ -4,6 +4,8 @@
 #include "Cliente.hpp"
 
 #include <stdexcept>
+#include <fstream>
+#include <sstream>
 
 TEST_CASE("Pedido: construtor define id, cliente e status inicial") {
     Cliente cliente(1, "Ana", "ana@email.com", "senha123");
@@ -79,4 +81,19 @@ TEST_CASE("Pedido: recusa itens e status inválidos") {
     CHECK(pedido.getStatus() == "Pendente");
 }
 
+TEST_CASE("Pedido: salva o resumo com os cuidados das peças em arquivo") {
+    Pedido pedido(100, nullptr);
+    Produto calca(1, "Calca Jeans", "Calcas", 150.0, "Jeans", "Inverno 2026");
+    pedido.adicionarProduto(&calca, 1);
+    pedido.salvarResumo("build/resumo_teste.txt");
 
+    std::ifstream arquivo("build/resumo_teste.txt");
+    REQUIRE(arquivo.is_open());
+    std::stringstream conteudo;
+    conteudo << arquivo.rdbuf();
+    CHECK(conteudo.str().find("Total: R$ 150") != std::string::npos);
+    CHECK(conteudo.str().find("Calca Jeans (Jeans): lavar do avesso") != std::string::npos);
+
+    CHECK_THROWS_AS(pedido.salvarResumo("pasta_que_nao_existe/resumo.txt"),
+                    std::runtime_error);
+}

@@ -113,6 +113,18 @@ void atualizarStatus(const std::string& status);
 
 std::string gerarResumo() const; 
 
+/**
+     * @brief Salva o resumo do pedido em um arquivo .txt.
+     *
+     * Além do resumo, o arquivo traz as instruções de lavagem e
+     * conservação de cada peça, de acordo com o material.
+     *
+     * @param caminho Caminho do arquivo que será criado.
+     * @throws std::runtime_error se o arquivo não puder ser criado.
+     */
+    
+void salvarResumo(const std::string& caminho) const;
+
 };
 
 

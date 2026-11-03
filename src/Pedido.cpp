@@ -1,7 +1,34 @@
 #include "Pedido.hpp"
 #include "Produto.hpp"
+#include "KitRoupas.hpp"
+
 #include <sstream>
 #include <stdexcept>
+#include <fstream>
+
+static std::string cuidadosComMaterial(const std::string& material) {
+    if (material == "Algodao") {
+        return "lavar na maquina com agua fria e secar a sombra.";
+    }
+    if (material == "Jeans") {
+        return "lavar do avesso, sem alvejante, e nao usar secadora.";
+    }
+    if (material == "La") {
+        return "lavar a mao com sabao neutro e secar na horizontal.";
+    }
+    if (material == "Seda" || material == "Viscose") {
+        return "lavar a mao com agua fria, sem torcer.";
+    }
+    if (material == "Couro") {
+        return "limpar com pano umido; nao lavar.";
+    }
+    return "seguir as instrucoes da etiqueta.";
+}
+
+static void escreverCuidados(std::ostream& saida, const Produto* produto) {
+    saida << "- " << produto->getNome() << " (" << produto->getMaterial() << "): "
+          << cuidadosComMaterial(produto->getMaterial()) << "\n";
+}
 
 Pedido::Pedido(int id, Cliente* cliente)
     : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
@@ -62,4 +89,23 @@ std::string Pedido::gerarResumo() const {
     }
     resumo << "Total: R$ " << calcularTotal() << "\n";
     return resumo.str();
+}
+
+void Pedido::salvarResumo(const std::string& caminho) const {
+    std::ofstream arquivo(caminho);
+    if (!arquivo.is_open()) {
+        throw std::runtime_error("Nao foi possivel criar o arquivo " + caminho + ".");
+    }
+    arquivo << gerarResumo();
+    arquivo << "\nCuidados com as pecas:\n";
+    for (Produto* produto : produtos) {
+        KitRoupas* kit = dynamic_cast<KitRoupas*>(produto);
+        if (kit == nullptr) {
+            escreverCuidados(arquivo, produto);
+        } else {
+            for (Produto* peca : kit->getProdutos()) {
+                escreverCuidados(arquivo, peca);
+            }
+        }
+    }
 }
