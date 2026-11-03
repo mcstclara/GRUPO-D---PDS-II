@@ -3,6 +3,8 @@
 #include "Pedido.hpp"
 #include "Produto.hpp"
 
+#include <stdexcept>
+
 TEST_CASE("TrocaDevolucao: construtor armazena pedido, produto e motivo") {
     Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
     Pedido pedido(100, nullptr);
@@ -83,4 +85,13 @@ TEST_CASE("TrocaDevolucao: cancela uma solicitação") {
     solicitacao.solicitarTroca();
     solicitacao.cancelarSolicitacao();
     CHECK(solicitacao.getStatus() == "Cancelada");
+}
+
+TEST_CASE("TrocaDevolucao: exige motivo e status preenchidos") {
+    Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
+    Pedido pedido(100, nullptr);
+    CHECK_THROWS_AS(TrocaDevolucao(&pedido, &vestido, ""), std::invalid_argument);
+    TrocaDevolucao solicitacao(&pedido, &vestido, "Ficou apertado");
+    CHECK_THROWS_AS(solicitacao.atualizarStatus(""), std::invalid_argument);
+    CHECK(solicitacao.getStatus() == "Criada");
 }

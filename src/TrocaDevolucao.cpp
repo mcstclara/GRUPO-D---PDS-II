@@ -1,12 +1,17 @@
 #include "TrocaDevolucao.hpp"
 #include "Pedido.hpp"
 
+#include <stdexcept>
+
 
 TrocaDevolucao::TrocaDevolucao(Pedido* pedido,
                                Produto* produto,
                                const std::string& motivo)
-    : pedido(pedido), produto(produto), motivo(motivo), status("Criada") {}
-
+        : pedido(pedido), produto(produto), motivo(motivo), status("Criada") {
+    if (motivo.empty()) {
+        throw std::invalid_argument("Informe o motivo da troca ou devolucao.");
+    }
+}
 
 bool TrocaDevolucao::verificarElegibilidade() const {
     if (pedido == nullptr || produto == nullptr) {
@@ -60,5 +65,8 @@ std::string TrocaDevolucao::getStatus() const {
 }
 
 void TrocaDevolucao::atualizarStatus(const std::string& status) {
+    if (status.empty()) {
+        throw std::invalid_argument("O status da solicitacao nao pode ser vazio.");
+    }
     this->status = status;
 }
