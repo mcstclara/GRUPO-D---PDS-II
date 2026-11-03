@@ -2,6 +2,16 @@
 #include "Cliente.hpp"
 #include "Produto.hpp"
 
+#include <stdexcept>
+
+static void exigirMedidas(const Cliente& cliente) {
+    if (!cliente.temMedidas()) {
+        throw std::logic_error(
+            "Cadastre suas medidas antes de usar o provador (Minha conta > Medidas).");
+    }
+}
+
+
 static double folgaMinima(Cliente::PreferenciaCaimento preferencia) {
     switch (preferencia) {
         case Cliente::PreferenciaCaimento::JUSTO:
@@ -28,8 +38,10 @@ std::string ProvadorVirtual::recomendarTamanho(const Cliente& cliente,
 
 bool ProvadorVirtual::tamanhoCompativel(const Cliente& cliente,
                                         const Produto& produto,
-                                        const std::string& tamanho) const {
+                                                                                const std::string& tamanho) const {
+    exigirMedidas(cliente);
     std::vector<double> medidas = produto.getMedidas(tamanho);
+
     if (medidas.size() < 3) {
         return false;
     }
@@ -41,8 +53,10 @@ bool ProvadorVirtual::tamanhoCompativel(const Cliente& cliente,
 
 std::vector<std::string> ProvadorVirtual::encontrarTamanhosCompativeis(
     const Cliente& cliente,
-    const Produto& produto) const {
+        const Produto& produto) const {
+    exigirMedidas(cliente);
     std::vector<std::string> compativeis;
+
     for (const std::string& tamanho : produto.getTamanhos()) {
         if (tamanhoCompativel(cliente, produto, tamanho)) {
             compativeis.push_back(tamanho);

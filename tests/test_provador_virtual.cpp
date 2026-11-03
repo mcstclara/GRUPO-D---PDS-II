@@ -3,6 +3,9 @@
 #include "Cliente.hpp"
 #include "Produto.hpp"
 
+#include <stdexcept>
+
+
 static Produto criarCamiseta() {
     Produto camiseta(1, "Camiseta Basica", "Blusas", 59.90, "Algodao", "Verao 2026");
     camiseta.adicionarTamanho("P", {88.0, 72.0, 94.0});
@@ -77,4 +80,12 @@ TEST_CASE("ProvadorVirtual: informa quando não há tamanho adequado") {
 
     CHECK(provador.encontrarTamanhosCompativeis(cliente, camiseta).empty());
     CHECK(provador.recomendarTamanho(cliente, camiseta) == "");
+}
+
+TEST_CASE("ProvadorVirtual: exige as medidas do cliente") {
+    ProvadorVirtual provador;
+    Produto camiseta = criarCamiseta();
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK_THROWS_AS(provador.recomendarTamanho(cliente, camiseta), std::logic_error);
+    CHECK_THROWS_AS(provador.tamanhoCompativel(cliente, camiseta, "M"), std::logic_error);
 }
