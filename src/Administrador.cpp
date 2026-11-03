@@ -1,6 +1,7 @@
 #include "Administrador.hpp"
 #include "Estoque.hpp"
 #include "Produto.hpp"
+#include <stdexcept>
 
 
 
@@ -28,7 +29,7 @@ std::vector<Produto*> Administrador::getProdutos() const {
 
 void Administrador::cadastrarProduto(Produto* produto) {
     if (produto == nullptr) {
-        return;
+        throw std::invalid_argument("Produto vazio nao pode ser cadastrado.");
     }
     for (Produto* p : produtos) {
         if (p->getId() == produto->getId()) {
@@ -40,19 +41,21 @@ void Administrador::cadastrarProduto(Produto* produto) {
 
 void Administrador::atualizarProduto(Produto* produto) {
     if (produto == nullptr){
-return;
-}
-for (size_t i = 0; i < produtos.size(); i++) {
-   if (produtos[i]->getId() == produto->getId()){
-   produtos[i] = produto;
-   return;
-}
-}
+        throw std::invalid_argument("Produto vazio nao pode ser atualizado.");
+    }
+    for (size_t i = 0; i < produtos.size(); i++) {
+      if (produtos[i]->getId() == produto->getId()){
+          produtos[i] = produto;
+         return;
+        }
+    }
+
+    throw std::invalid_argument("O produto " + std::to_string(produto->getId()) + " nao esta no catalogo.");
 }
 
 void Administrador::removerProduto(Produto* produto) {
     if (produto == nullptr){
-        return;
+        throw std::invalid_argument("Produto vazio nao pode ser removido.");
     }
     for (size_t i = 0; i<produtos.size(); i++){
         if (produtos[i]->getId() == produto->getId()){
@@ -60,12 +63,13 @@ void Administrador::removerProduto(Produto* produto) {
         return;
         }
     }
+    throw std::invalid_argument("O produto " + std::to_string(produto->getId()) + " nao esta no catalogo.");
 }
 
 
 void Administrador::atualizarEstoque(Estoque* estoque, int produtoId, int quantidade) {
     if (estoque == nullptr) {
-        return;
+        throw std::invalid_argument("Estoque vazio.");    
     }
     if (quantidade > 0) {
         estoque->adicionarUnidades(produtoId, quantidade);
@@ -76,8 +80,23 @@ void Administrador::atualizarEstoque(Estoque* estoque, int produtoId, int quanti
 
 void Administrador::atualizarStatusPedido(Pedido* pedido, const std::string& status) {
     if (pedido == nullptr){
-        return; 
+        throw std::invalid_argument("Pedido vazio.");
     }
+    
+    const std::vector<std::string> permitidos = {
+        "Pendente", "Pago", "Enviado", "Entregue", "Cancelado"};
+    bool valido = false;
+
+    for (const std::string& permitido : permitidos) {
+        if (status == permitido) {
+            valido = true;
+        }
+    }
+
+    if (!valido) {
+        throw std::invalid_argument("Status de pedido desconhecido: " + status + ".");
+    }    
+
     if (pedido->getStatus() != status){
         pedido->atualizarStatus(status);
     }

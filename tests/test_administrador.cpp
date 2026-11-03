@@ -4,6 +4,8 @@
 #include "Pedido.hpp"
 #include "Produto.hpp"
 
+#include <stdexcept>
+
 TEST_CASE("Administrador: construtor armazena os dados") {
     Administrador admin(1, "Maria", "maria@loja.com", "senha123");
 
@@ -78,4 +80,25 @@ TEST_CASE("Administrador: remove um produto do catálogo") {
     admin.removerProduto(&camiseta);
     REQUIRE(admin.getProdutos().size() == 1);
     CHECK(admin.getProdutos()[0] == &bermuda);
+}
+
+
+TEST_CASE("Administrador: recusa produtos vazios e produtos fora do catálogo") {
+    Administrador admin(1, "Maria", "maria@loja.com", "senha123");
+    Produto camiseta(1, "Camiseta Basica", "Blusas", 59.90, "Algodao", "Verao 2026");
+    CHECK_THROWS_AS(admin.cadastrarProduto(nullptr), std::invalid_argument);
+    CHECK_THROWS_AS(admin.atualizarProduto(&camiseta), std::invalid_argument);
+    CHECK_THROWS_AS(admin.removerProduto(&camiseta), std::invalid_argument);
+    CHECK_THROWS_AS(admin.atualizarProduto(nullptr), std::invalid_argument);
+    CHECK_THROWS_AS(admin.removerProduto(nullptr), std::invalid_argument);
+    CHECK(admin.getProdutos().empty());
+}
+
+TEST_CASE("Administrador: recusa status desconhecido e ponteiros vazios") {
+    Administrador admin(1, "Maria", "maria@loja.com", "senha123");
+    Pedido pedido(100, nullptr);
+    CHECK_THROWS_AS(admin.atualizarStatusPedido(&pedido, "Perdido"), std::invalid_argument);
+    CHECK(pedido.getStatus() == "Pendente");
+    CHECK_THROWS_AS(admin.atualizarStatusPedido(nullptr, "Enviado"), std::invalid_argument);
+    CHECK_THROWS_AS(admin.atualizarEstoque(nullptr, 1, 5), std::invalid_argument);
 }
