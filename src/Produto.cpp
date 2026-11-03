@@ -1,4 +1,5 @@
 #include "Produto.hpp"
+#include <stdexcept>
 
 Produto::Produto(int id,
                  const std::string& nome,
@@ -7,7 +8,17 @@ Produto::Produto(int id,
                  const std::string& material,
                  const std::string& colecao)
     : id(id), nome(nome), categoria(categoria), preco(preco),
-      material(material), colecao(colecao) {}
+      material(material), colecao(colecao) {
+    if (id <= 0) {
+        throw std::invalid_argument("O id do produto deve ser maior que zero.");
+    }
+    if (nome.empty()) {
+        throw std::invalid_argument("O nome do produto nao pode ser vazio.");
+    }
+    if (preco < 0.0) {
+        throw std::invalid_argument("O preco do produto nao pode ser negativo.");
+    }
+}
 
 int Produto::getId() const {
     return id;
@@ -35,6 +46,18 @@ std::string Produto::getColecao() const {
 
 void Produto::adicionarTamanho(const std::string& tamanho,
                                const std::vector<double>& medidas) {
+    if (tamanho.empty()) {
+        throw std::invalid_argument("O nome do tamanho nao pode ser vazio.");
+    }
+    if (medidas.size() != 3) {
+        throw std::invalid_argument("Informe 3 medidas: peito, cintura e quadril.");
+    }
+    for (double medida : medidas) {
+        if (medida <= 0.0) {
+            throw std::invalid_argument("As medidas devem ser maiores que zero.");
+        }
+    }
+
     if (medidasPorTamanho.count(tamanho) == 0) {
         tamanhos.push_back(tamanho);
     }

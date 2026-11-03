@@ -1,6 +1,9 @@
 #include "doctest.h"
 #include "Produto.hpp"
 
+#include <stdexcept>
+
+
 TEST_CASE("Produto: construtor armazena as informações do produto") {
     Produto camiseta(1, "Camiseta Basica", "Blusas", 59.90, "Algodao", "Verao 2026");
 
@@ -51,3 +54,19 @@ TEST_CASE("Produto: tamanho inexistente não tem medidas") {
     CHECK(camiseta.getMedidas("GG").empty());
 }
 
+TEST_CASE("Produto: recusa dados inválidos no cadastro") {
+    CHECK_THROWS_AS(Produto(0, "Camiseta", "Blusas", 59.90, "Algodao", "Verao 2026"),
+                    std::invalid_argument);
+    CHECK_THROWS_AS(Produto(1, "", "Blusas", 59.90, "Algodao", "Verao 2026"),
+                    std::invalid_argument);
+    CHECK_THROWS_AS(Produto(1, "Camiseta", "Blusas", -1.0, "Algodao", "Verao 2026"),
+                    std::invalid_argument);
+}
+
+TEST_CASE("Produto: recusa tamanhos sem as três medidas") {
+    Produto camiseta(1, "Camiseta Basica", "Blusas", 59.90, "Algodao", "Verao 2026");
+    CHECK_THROWS_AS(camiseta.adicionarTamanho("", {88.0, 72.0, 94.0}), std::invalid_argument);
+    CHECK_THROWS_AS(camiseta.adicionarTamanho("P", {88.0, 72.0}), std::invalid_argument);
+    CHECK_THROWS_AS(camiseta.adicionarTamanho("P", {88.0, -1.0, 94.0}), std::invalid_argument);
+    CHECK(camiseta.getTamanhos().empty());
+}
