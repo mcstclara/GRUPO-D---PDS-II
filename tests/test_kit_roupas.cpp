@@ -1,6 +1,8 @@
 #include "doctest.h"
 #include "KitRoupas.hpp"
 
+#include <stdexcept>
+
 TEST_CASE("KitRoupas: construtor armazena os dados do kit") {
     KitRoupas kit(50, "Kit Praia", "Kits", "Verao 2026", 10.0);
 
@@ -51,4 +53,15 @@ TEST_CASE("KitRoupas: preço é calculado por polimorfismo") {
 
     Produto* produto = &kit;
     CHECK(produto->getPreco() == doctest::Approx(180.0));
+}
+
+TEST_CASE("KitRoupas: recusa desconto fora de 0 a 100% e produtos inválidos") {
+    CHECK_THROWS_AS(KitRoupas(50, "Kit Praia", "Kits", "Verao 2026", -5.0),
+                    std::invalid_argument);
+    CHECK_THROWS_AS(KitRoupas(50, "Kit Praia", "Kits", "Verao 2026", 120.0),
+                    std::invalid_argument);
+    KitRoupas kit(50, "Kit Praia", "Kits", "Verao 2026", 10.0);
+    CHECK_THROWS_AS(kit.adicionarProduto(nullptr), std::invalid_argument);
+    CHECK_THROWS_AS(kit.adicionarProduto(&kit), std::invalid_argument);
+    CHECK(kit.getProdutos().empty());
 }

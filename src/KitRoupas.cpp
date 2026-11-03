@@ -1,4 +1,5 @@
 #include "KitRoupas.hpp"
+#include <stdexcept>
 
 
 KitRoupas::KitRoupas(int id,
@@ -6,12 +7,20 @@ KitRoupas::KitRoupas(int id,
                      const std::string& categoria,
                      const std::string& colecao,
                      double desconto)
-    : Produto(id, nome, categoria, 0.0, "Variado", colecao),
-      desconto(desconto) {}
+        : Produto(id, nome, categoria, 0.0, "Variado", colecao),
+          desconto(desconto) {
+           if (desconto < 0.0 || desconto > 100.0) {
+           throw std::invalid_argument("O desconto do kit deve estar entre 0 e 100%.");
+           }
+        }
+
 
 void KitRoupas::adicionarProduto(Produto* produto) {
     if (produto == nullptr) {
-        return;
+        throw std::invalid_argument("Produto vazio nao pode entrar no kit.");
+    }
+    if (produto == this) {
+        throw std::invalid_argument("Um kit nao pode conter a si mesmo.");
     }
     produtos.push_back(produto);
 }
