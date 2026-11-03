@@ -3,6 +3,8 @@
 #include "Produto.hpp"
 #include "Cliente.hpp"
 
+#include <stdexcept>
+
 TEST_CASE("Pedido: construtor define id, cliente e status inicial") {
     Cliente cliente(1, "Ana", "ana@email.com", "senha123");
     Pedido pedido(100, &cliente);
@@ -66,4 +68,15 @@ TEST_CASE("Pedido: gera um resumo com os dados do pedido") {
     CHECK(resumo.find("Calca Jeans") != std::string::npos);
     CHECK(resumo.find("Pendente") != std::string::npos);
 }
+
+TEST_CASE("Pedido: recusa itens e status inválidos") {
+    Pedido pedido(100, nullptr);
+    Produto calca(1, "Calca Jeans", "Calcas", 150.0, "Jeans", "Inverno 2026");
+    CHECK_THROWS_AS(pedido.adicionarProduto(nullptr, 1), std::invalid_argument);
+    CHECK_THROWS_AS(pedido.adicionarProduto(&calca, 0), std::invalid_argument);
+    CHECK_THROWS_AS(pedido.atualizarStatus(""), std::invalid_argument);
+    CHECK(pedido.getProdutos().empty());
+    CHECK(pedido.getStatus() == "Pendente");
+}
+
 

@@ -1,11 +1,18 @@
 #include "Pedido.hpp"
 #include "Produto.hpp"
 #include <sstream>
+#include <stdexcept>
 
 Pedido::Pedido(int id, Cliente* cliente)
     : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
 
 void Pedido::adicionarProduto(Produto* produto, int quantidade) {
+    if(produto == nullptr){
+        throw std::invalid_argument("Produto vazio nao pode entrar no pedido!");
+    }
+    if (quantidade <= 0){
+        throw std::invalid_argument("A quantidade deve ser maior que zero!");
+    }
     produtos.push_back(produto);
     quantidades.push_back(quantidade);
 }
@@ -39,6 +46,9 @@ std::string Pedido::getStatus() const {
 }
 
 void Pedido::atualizarStatus(const std::string& status) {
+    if(status.empty()){
+        throw std::invalid_argument("O status do pedido nao pode ser vazio.");
+    }
     this->status = status;
 }
 
