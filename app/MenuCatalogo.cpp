@@ -92,7 +92,56 @@ static void filtrarPorCategoria(Loja& loja) {
     mostrarProdutos(loja, filtrados);
 }
 
+static void montarKit(Loja& loja) {
+    std::cout << "\nEscolha pelo menos 2 produtos. Kits com 2 pecas tem 10% de desconto;"
+              << " com 3 ou mais, 15%.\n";
+    std::vector<Produto*> escolhidos;
+    while (true) {
+        int produtoId = lerInteiro("ID do produto (0 para terminar): ", 0, 1000000);
+        if (produtoId == 0) {
+            if (escolhidos.size() >= 2) {
+                break;
+            }
+            std::cout << "Escolha pelo menos 2 produtos.\n";
+            continue;
+        }
+        try {
+            Produto* produto = loja.buscarProduto(produtoId);
+            if (loja.getEstoque().estaEsgotado(produtoId)) {
+                std::cout << produto->getNome() << " esta esgotado.\n";
+                continue;
+            }
+            escolhidos.push_back(produto);
+            std::cout << produto->getNome() << " entrou no kit.\n";
+        } catch (const ProdutoNaoEncontrado& erro) {
+            std::cout << erro.what() << "\n";
+        }
+    }
+
+    double desconto = 10.0;
+    if (escolhidos.size() >= 3) {
+        desconto = 15.0;
+    }
+    KitRoupas* kit = new KitRoupas(loja.gerarIdProduto(), "Kit personalizado",
+                                   "Kits", "Kits", desconto);
+    loja.guardarProduto(kit);
+    double precoOriginal = 0.0;
+    for (Produto* produto : escolhidos) {
+        kit->adicionarProduto(produto);
+        precoOriginal += produto->getPreco();
+    }
+    std::cout << std::fixed << std::setprecision(2)
+              << "\nPreco das pecas separadas: R$ " << precoOriginal
+              << "\nPreco do kit (" << static_cast<int>(desconto) << "% de desconto): R$ "
+              << kit->getPreco() << "\n";
+    if (lerSimNao("Adicionar o kit ao carrinho?")) {
+        loja.getCarrinho().adicionarProduto(kit, 1);
+        std::cout << "Kit adicionado ao carrinho.\n";
+    }
+}
+
 void menuCatalogo(Loja& loja) {
+
 
     while (true) {
         std::cout << "\n--- Catalogo ---\n"
@@ -108,10 +157,10 @@ void menuCatalogo(Loja& loja) {
             mostrarProdutos(loja, loja.getCatalogo());
                 } else if (opcao == 2) {
             buscarPorNome(loja);
-        } else if (opcao == 3) {
+                } else if (opcao == 3) {
             filtrarPorCategoria(loja);
         } else {
-            std::cout << "Em construcao.\n";
+            montarKit(loja);
         }
     }
 }
