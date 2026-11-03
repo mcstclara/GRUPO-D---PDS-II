@@ -1,0 +1,14 @@
+#modelo: id; nome; categoria; preco; material; colecao; quantidade; tamanhos
+
+1;Camiseta Basica;Camisetas;59.90;Algodao;Verao 2026;12;P=88,72,94|M=96,80,102|G=104,88,110
+2;Camiseta Listrada;Camisetas;69.90;Algodao;Verao 2026;8;P=88,72,94|M=96,80,102|G=104,88,110
+3;Calca Jeans Reta;Calcas;179.90;Jeans;Inverno 2026;4;36=90,70,96|38=94,74,100|40=98,78,104|42=102,82,108
+4;Calca de Alfaiataria;Calcas;199.90;Poliester;Inverno 2026;6;36=90,70,96|38=94,74,100|40=98,78,104
+5;Vestido Estampado;Vestidos;219.90;Viscose;Verao 2026;0;P=88,72,96|M=96,80,104|G=104,88,112
+6;Vestido de Trico;Vestidos;249.90;La;Inverno 2026;3;P=90,74,98|M=98,82,106|G=106,90,114
+7;Blusa de Trico;Blusas;129.90;La;Inverno 2026;5;P=92,76,98|M=100,84,106|G=108,92,114
+8;Bermuda Branca;Bermudas;89.90;Linho;Verao 2026;10;38=90,74,98|40=94,78,102|42=98,82,106
+9;Bolsa Transversal;Acessorios;99.90;Couro;Basicos;7;-
+10;Cinto de Couro;Acessorios;49.90;Couro;Basicos;15;-
+11;Lenco Estampado;Acessorios;39.90;Seda;Verao 2026;9;-
+12;Meia Cano Alto;Acessorios;19.90;Algodao;Basicos;30;-
