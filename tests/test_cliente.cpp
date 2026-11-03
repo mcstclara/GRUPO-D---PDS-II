@@ -2,6 +2,9 @@
 #include "Cliente.hpp"
 #include "Pedido.hpp"
 
+#include <stdexcept>
+
+
 TEST_CASE("Cliente: construtor armazena os dados de cadastro") {
     Cliente cliente(1, "Ana", "ana@email.com", "senha123");
 
@@ -88,3 +91,18 @@ TEST_CASE("Cliente: associa pedidos ao cliente") {
     CHECK(pedidos[1] == &pedido2);
 }
 
+TEST_CASE("Cliente: recusa nome, e-mail e senha inválidos") {
+    CHECK_THROWS_AS(Cliente(1, "", "ana@email.com", "senha123"), std::invalid_argument);
+    CHECK_THROWS_AS(Cliente(1, "Ana", "anaemail.com", "senha123"), std::invalid_argument);
+    CHECK_THROWS_AS(Cliente(1, "Ana", "ana@email", "senha123"), std::invalid_argument);
+    CHECK_THROWS_AS(Cliente(1, "Ana", "ana@email.com", "123"), std::invalid_argument);
+}
+
+TEST_CASE("Cliente: atualizações inválidas não mudam os dados") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK_THROWS_AS(cliente.atualizarNome(""), std::invalid_argument);
+    CHECK_THROWS_AS(cliente.atualizarEmail("sem-arroba"), std::invalid_argument);
+    CHECK_THROWS_AS(cliente.atualizarSenha("abc"), std::invalid_argument);
+    CHECK(cliente.getNome() == "Ana");
+    CHECK(cliente.getEmail() == "ana@email.com");
+}

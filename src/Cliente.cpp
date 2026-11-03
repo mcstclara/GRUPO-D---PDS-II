@@ -1,4 +1,26 @@
 #include "Cliente.hpp"
+#include <stdexcept>
+
+static void validarNome(const std::string& nome) {
+    if (nome.empty()) {
+        throw std::invalid_argument("O nome nao pode ser vazio.");
+    }
+}
+
+static void validarEmail(const std::string& email) {
+    std::size_t arroba = email.find('@');
+    if (arroba == std::string::npos || arroba == 0 ||
+        email.find('.', arroba) == std::string::npos ||
+        email[email.size() - 1] == '.') {
+        throw std::invalid_argument("E-mail invalido: \"" + email + "\".");
+    }
+}
+
+static void validarSenha(const std::string& senha) {
+    if (senha.size() < 6) {
+        throw std::invalid_argument("A senha deve ter pelo menos 6 caracteres.");
+    }
+}
 
 Cliente::Cliente(int id,
                  const std::string& nome,
@@ -6,7 +28,12 @@ Cliente::Cliente(int id,
                  const std::string& senha)
     : id(id), nome(nome), email(email), senha(senha),
       altura(0.0), peso(0.0), peito(0.0), cintura(0.0), quadril(0.0),
-      preferencia(PreferenciaCaimento::NORMAL) {}
+      preferencia(PreferenciaCaimento::NORMAL) {
+    validarNome(nome);
+    validarEmail(email);
+    validarSenha(senha);
+}
+
 
 int Cliente::getId() const {
     return id;
@@ -21,16 +48,21 @@ std::string Cliente::getEmail() const {
 }
 
 void Cliente::atualizarNome(const std::string& nome) {
+    validarNome(nome);
     this->nome = nome;
 }
 
 void Cliente::atualizarEmail(const std::string& email) {
+    validarEmail(email);
     this->email = email;
 }
 
 void Cliente::atualizarSenha(const std::string& senha) {
+    validarSenha(senha);
     this->senha = senha;
 }
+
+
 
 void Cliente::adicionarEndereco(const std::string& endereco) {
     enderecos.push_back(endereco);
