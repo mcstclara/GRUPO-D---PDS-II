@@ -111,6 +111,27 @@ static void definirMedidas(Cliente& cliente) {
     std::cout << "Medidas salvas.\n";
 }
 
+static void alterarDados(Loja& loja, Cliente& cliente) {
+    std::cout << "[1] Nome\n[2] E-mail\n[3] Senha\n";
+    int campo = lerInteiro("O que deseja alterar? ", 1, 3);
+    if (campo == 1) {
+        cliente.atualizarNome(lerTexto("Novo nome: "));
+    } else if (campo == 2) {
+        std::string email = lerTexto("Novo e-mail: ");
+        Cliente* outro = buscarPorEmail(loja, email);
+        if (outro != nullptr && outro != &cliente) {
+            throw ErroLoja("Ja existe uma conta com o e-mail " + email + ".");
+        }
+        cliente.atualizarEmail(email);
+    } else {
+        if (!cliente.verificarSenha(lerTexto("Senha atual: "))) {
+            throw AcessoNegado("Senha atual incorreta.");
+        }
+        cliente.atualizarSenha(lerTexto("Nova senha: "));
+    }
+    std::cout << "Dados atualizados.\n";
+}
+
 static bool menuComConta(Loja& loja) {
     Cliente& cliente = loja.exigirCliente();
     std::cout << "\n--- Minha conta (" << cliente.getEmail() << ") ---\n"
@@ -133,10 +154,10 @@ static bool menuComConta(Loja& loja) {
         verPerfil(cliente);
     } else if (opcao == 2) {
         adicionarEndereco(cliente);
-    } else if (opcao == 3) {
+        } else if (opcao == 3) {
         definirMedidas(cliente);
     } else {
-        std::cout << "Em construcao.\n";
+        alterarDados(loja, cliente);
     }
     return true;
 }
