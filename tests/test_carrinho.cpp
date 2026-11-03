@@ -104,3 +104,11 @@ TEST_CASE("Carrinho: recusa produtos vazios e quantidades inválidas") {
     CHECK(carrinho.getQuantidades()[0] == 1);
 }
 
+TEST_CASE("Carrinho: não finaliza a compra com o carrinho vazio") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    Carrinho carrinho(&cliente);
+    CHECK(carrinho.estaVazio());
+    CHECK_THROWS_AS(carrinho.finalizarCompra(), std::logic_error);
+    CHECK(cliente.getPedidos().empty());
+}
+
