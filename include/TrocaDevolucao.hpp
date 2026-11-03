@@ -37,7 +37,15 @@ public:
      *
      * @return true se a solicitação for elegível e false caso contrário.
      */
-    bool verificarElegibilidade() const;
+        bool verificarElegibilidade() const;
+
+    /**
+     * @brief Explica por que a solicitação não pode ser atendida.
+     *
+     * @return Motivo da recusa, ou texto vazio se a solicitação for elegível.
+     */
+    std::string explicarRecusa() const;
+
 
     /**
      * @brief Solicita uma troca do produto.

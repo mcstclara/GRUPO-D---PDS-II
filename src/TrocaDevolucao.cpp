@@ -13,19 +13,23 @@ TrocaDevolucao::TrocaDevolucao(Pedido* pedido,
     }
 }
 
-bool TrocaDevolucao::verificarElegibilidade() const {
+std::string TrocaDevolucao::explicarRecusa() const {
     if (pedido == nullptr || produto == nullptr) {
-        return false;
+        return "A solicitacao precisa de um pedido e de um produto.";
     }
     if (pedido->getStatus() != "Entregue") {
-        return false;
+        return "O pedido ainda nao foi entregue (status: " + pedido->getStatus() + ").";
     }
     for (Produto* p : pedido->getProdutos()) {
         if (p == produto) {
-            return true;
+            return "";
         }
     }
-    return false;
+    return "Este produto nao faz parte do pedido.";
+}
+
+bool TrocaDevolucao::verificarElegibilidade() const {
+    return explicarRecusa().empty();
 }
 
 void TrocaDevolucao::solicitarTroca() {

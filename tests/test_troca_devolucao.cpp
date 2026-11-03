@@ -95,3 +95,25 @@ TEST_CASE("TrocaDevolucao: exige motivo e status preenchidos") {
     CHECK_THROWS_AS(solicitacao.atualizarStatus(""), std::invalid_argument);
     CHECK(solicitacao.getStatus() == "Criada");
 }
+
+TEST_CASE("TrocaDevolucao: explica o motivo da recusa") {
+    Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
+    Produto bermuda(2, "Bermuda", "Shorts", 89.90, "Sarja", "Verao 2026");
+    Pedido pedido(100, nullptr);
+    pedido.adicionarProduto(&vestido, 1);
+
+    TrocaDevolucao naoEntregue(&pedido, &vestido, "Ficou apertado");
+    CHECK(naoEntregue.explicarRecusa() ==
+          "O pedido ainda nao foi entregue (status: Pendente).");
+
+    pedido.atualizarStatus("Entregue");
+    TrocaDevolucao foraDoPedido(&pedido, &bermuda, "Nao gostei");
+    CHECK(foraDoPedido.explicarRecusa() == "Este produto nao faz parte do pedido.");
+
+    TrocaDevolucao valida(&pedido, &vestido, "Ficou apertado");
+    CHECK(valida.explicarRecusa().empty());
+
+    TrocaDevolucao incompleta(nullptr, &vestido, "Ficou apertado");
+    CHECK(incompleta.explicarRecusa() ==
+          "A solicitacao precisa de um pedido e de um produto.");
+}
