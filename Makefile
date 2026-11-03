@@ -11,9 +11,10 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 APP_SRCS := $(wildcard $(APP_DIR)/*.cpp)
 APP_OBJS := $(patsubst $(APP_DIR)/%.cpp,$(BUILD_DIR)/app/%.o,$(APP_SRCS))
 APP_BIN  := $(BUILD_DIR)/loja
-.PHONY: all clean
 
-all: $(OBJS)
+.PHONY: all clean run
+
+all: $(APP_BIN)
 
 $(BUILD_DIR)/app/%.o: $(APP_DIR)/%.cpp
 	@mkdir -p $(dir $@)
