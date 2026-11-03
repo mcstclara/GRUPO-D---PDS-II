@@ -62,6 +62,11 @@ void Cliente::atualizarSenha(const std::string& senha) {
     this->senha = senha;
 }
 
+bool Cliente::verificarSenha(const std::string& senha) const {
+    return this->senha == senha;
+}
+
+
 void Cliente::adicionarEndereco(const std::string& endereco) {
     if (endereco.empty()) {
         throw std::invalid_argument("O endereco nao pode ser vazio.");

@@ -120,3 +120,13 @@ TEST_CASE("Cliente: recusa medidas e endereço inválidos") {
     CHECK_THROWS_AS(cliente.adicionarEndereco(""), std::invalid_argument);
     CHECK(cliente.getEnderecos().empty());
 }
+
+TEST_CASE("Cliente: confere a senha no login") {
+    Cliente cliente(1, "Ana", "ana@email.com", "senha123");
+    CHECK(cliente.verificarSenha("senha123") == true);
+    CHECK(cliente.verificarSenha("Senha123") == false);
+    CHECK(cliente.verificarSenha("") == false);
+    cliente.atualizarSenha("novaSenha456");
+    CHECK(cliente.verificarSenha("novaSenha456") == true);
+    CHECK(cliente.verificarSenha("senha123") == false);
+}

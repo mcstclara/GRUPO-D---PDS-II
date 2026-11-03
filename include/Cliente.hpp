@@ -95,7 +95,16 @@ public:
      *
      * @param senha Nova senha do cliente.
      */
-    void atualizarSenha(const std::string& senha);
+        void atualizarSenha(const std::string& senha);
+
+    /**
+     * @brief Confere se a senha informada é a senha do cliente.
+     *
+     * @param senha Senha digitada no login.
+     * @return true se a senha estiver correta.
+     */
+    bool verificarSenha(const std::string& senha) const;
+
 
     /**
      * @brief Adiciona um endereço à lista de endereços do cliente.
