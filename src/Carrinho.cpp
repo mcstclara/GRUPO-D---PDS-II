@@ -55,6 +55,10 @@ double Carrinho::calcularTotal() const {
     return total;
 }
 
+bool Carrinho::estaVazio() const{
+    return produtos.empty();
+}
+
 std::vector<Produto*> Carrinho::getProdutos() const {
     return produtos;
 }
@@ -64,6 +68,9 @@ std::vector<int> Carrinho::getQuantidades() const {
 }
 
 Pedido* Carrinho::finalizarCompra() {
+    if(estaVazio()){
+        throw std::logic_error("Nao e possivel finalizar a compra com o carrinho vazio!");
+    }
     static int proximoId = 1;
     Pedido* pedido = new Pedido(proximoId, cliente);
     proximoId++;

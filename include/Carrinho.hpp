@@ -58,6 +58,13 @@ public:
      */
     double calcularTotal() const;
 
+     /**
+     * @brief Informa se o carrinho está vazio.
+     *
+     * @return true se não houver produtos no carrinho.
+     */
+    bool estaVazio() const;
+
     /**
      * @brief Retorna os produtos presentes no carrinho.
      *
