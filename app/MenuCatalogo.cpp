@@ -66,7 +66,34 @@ static void buscarPorNome(Loja& loja) {
     mostrarProdutos(loja, encontrados);
 }
 
+static void filtrarPorCategoria(Loja& loja) {
+    std::vector<std::string> categorias;
+    for (Produto* produto : loja.getCatalogo()) {
+        if (std::find(categorias.begin(), categorias.end(), produto->getCategoria()) ==
+            categorias.end()) {
+            categorias.push_back(produto->getCategoria());
+        }
+    }
+    if (categorias.empty()) {
+        std::cout << "\nO catalogo esta vazio.\n";
+        return;
+    }
+    std::cout << "\nCategorias:\n";
+    for (std::size_t i = 0; i < categorias.size(); i++) {
+        std::cout << "[" << i + 1 << "] " << categorias[i] << "\n";
+    }
+    int escolha = lerInteiro("Categoria: ", 1, static_cast<int>(categorias.size()));
+    std::vector<Produto*> filtrados;
+    for (Produto* produto : loja.getCatalogo()) {
+        if (produto->getCategoria() == categorias[escolha - 1]) {
+            filtrados.push_back(produto);
+        }
+    }
+    mostrarProdutos(loja, filtrados);
+}
+
 void menuCatalogo(Loja& loja) {
+
     while (true) {
         std::cout << "\n--- Catalogo ---\n"
                   << "[1] Ver todos os produtos\n"
@@ -79,8 +106,10 @@ void menuCatalogo(Loja& loja) {
             return;
         } else if (opcao == 1) {
             mostrarProdutos(loja, loja.getCatalogo());
-        } else if (opcao == 2) {
+                } else if (opcao == 2) {
             buscarPorNome(loja);
+        } else if (opcao == 3) {
+            filtrarPorCategoria(loja);
         } else {
             std::cout << "Em construcao.\n";
         }
