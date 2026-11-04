@@ -56,6 +56,33 @@ static void adicionar(Loja& loja, Carrinho& carrinho) {
     std::cout << quantidade << "x " << produto->getNome() << " no carrinho.\n";
 }
 
+static Produto* escolherItem(const Carrinho& carrinho) {
+    if (carrinho.estaVazio()) {
+        throw ErroLoja("Seu carrinho esta vazio.");
+    }
+    std::vector<Produto*> produtos = carrinho.getProdutos();
+    int item = lerInteiro("Numero do item: ", 1, static_cast<int>(produtos.size()));
+    return produtos[item - 1];
+}
+
+static void remover(Carrinho& carrinho) {
+    Produto* produto = escolherItem(carrinho);
+    carrinho.removerProduto(produto);
+    std::cout << produto->getNome() << " saiu do carrinho.\n";
+}
+
+static void alterarQuantidade(Loja& loja, Carrinho& carrinho) {
+    Produto* produto = escolherItem(carrinho);
+    int quantidade = lerInteiro("Nova quantidade: ", 1, 99);
+    bool ehKit = dynamic_cast<KitRoupas*>(produto) != nullptr;
+    if (!ehKit && !loja.getEstoque().temQuantidadeSuficiente(produto->getId(), quantidade)) {
+        throw EstoqueInsuficiente(produto->getNome(),
+                                  loja.getEstoque().consultarQuantidade(produto->getId()));
+    }
+    carrinho.atualizarQuantidade(produto, quantidade);
+    std::cout << "Quantidade atualizada.\n";
+}
+
 void menuCarrinho(Loja& loja) {
     Carrinho& carrinho = loja.getCarrinho();
     while (true) {
@@ -71,6 +98,10 @@ void menuCarrinho(Loja& loja) {
             return;
         } else if (opcao == 1) {
             adicionar(loja, carrinho);
+        } else if (opcao == 2) {
+            remover(carrinho);
+        } else if (opcao == 3) {
+            alterarQuantidade(loja, carrinho);
         } else {
             std::cout << "Em construcao.\n";
         }
