@@ -82,6 +82,79 @@ static void alterarQuantidade(Loja& loja, Carrinho& carrinho) {
     carrinho.atualizarQuantidade(produto, quantidade);
     std::cout << "Quantidade atualizada.\n";
 }
+static std::map<Produto*, int> pecasNecessarias(const Carrinho& carrinho) {
+    std::map<Produto*, int> pecas;
+    std::vector<Produto*> produtos = carrinho.getProdutos();
+    std::vector<int> quantidades = carrinho.getQuantidades();
+    for (std::size_t i = 0; i < produtos.size(); i++) {
+        KitRoupas* kit = dynamic_cast<KitRoupas*>(produtos[i]);
+        if (kit == nullptr) {
+            pecas[produtos[i]] += quantidades[i];
+        } else {
+            for (Produto* peca : kit->getProdutos()) {
+                pecas[peca] += quantidades[i];
+            }
+        }
+    }
+    return pecas;
+}
+
+static std::string escolherEndereco(Cliente& cliente) {
+    std::vector<std::string> enderecos = cliente.getEnderecos();
+    if (!enderecos.empty()) {
+        std::cout << "\nEnderecos cadastrados:\n";
+        for (std::size_t i = 0; i < enderecos.size(); i++) {
+            std::cout << "[" << i + 1 << "] " << enderecos[i] << "\n";
+        }
+        std::cout << "[0] Usar um endereco novo\n";
+        int escolha = lerInteiro("Endereco de entrega: ", 0,
+                                 static_cast<int>(enderecos.size()));
+        if (escolha > 0) {
+            return enderecos[escolha - 1];
+        }
+    }
+    std::string endereco = lerTexto("Endereco de entrega: ");
+    cliente.adicionarEndereco(endereco);
+    return endereco;
+}
+
+static void finalizarCompra(Loja& loja, Carrinho& carrinho) {
+    if (carrinho.estaVazio()) {
+        throw ErroLoja("Seu carrinho esta vazio.");
+    }
+    Cliente& cliente = loja.exigirCliente();
+    std::map<Produto*, int> pecas = pecasNecessarias(carrinho);
+    for (const auto& peca : pecas) {
+        if (!loja.getEstoque().temQuantidadeSuficiente(peca.first->getId(), peca.second)) {
+            throw EstoqueInsuficiente(peca.first->getNome(),
+                                      loja.getEstoque().consultarQuantidade(peca.first->getId()));
+        }
+    }
+
+    std::string endereco = escolherEndereco(cliente);
+    std::cout << "\nResumo da compra:";
+    mostrarCarrinho(carrinho);
+    std::cout << "Entrega em: " << endereco << "\n";
+    if (!lerSimNao("Confirmar a compra?")) {
+        std::cout << "Compra nao confirmada. Os itens continuam no carrinho.\n";
+        return;
+    }
+
+    Pedido* pedido = carrinho.finalizarCompra();
+    loja.registrarPedido(pedido);
+    for (const auto& peca : pecas) {
+        loja.getEstoque().removerUnidades(peca.first->getId(), peca.second);
+    }
+    std::string arquivo = "pedido_" + std::to_string(pedido->getId()) + ".txt";
+    try {
+        pedido->salvarResumo(arquivo);
+        std::cout << "\nPedido " << pedido->getId() << " registrado! Resumo salvo em "
+                  << arquivo << ".\n";
+    } catch (const std::runtime_error& erro) {
+        std::cout << "\nPedido " << pedido->getId()
+                  << " registrado, mas o resumo nao foi salvo: " << erro.what() << "\n";
+    }
+}
 
 void menuCarrinho(Loja& loja) {
     Carrinho& carrinho = loja.getCarrinho();
@@ -103,7 +176,7 @@ void menuCarrinho(Loja& loja) {
         } else if (opcao == 3) {
             alterarQuantidade(loja, carrinho);
         } else {
-            std::cout << "Em construcao.\n";
+            finalizarCompra(loja, carrinho);
         }
     }
 }
