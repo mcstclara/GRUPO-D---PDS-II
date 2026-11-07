@@ -112,9 +112,16 @@ Na raiz do repositório, rode `make run` (no Windows, `mingw32-make run` no Git 
 - **Provador virtual:** recomendação de tamanho a partir das medidas.
 - **Carrinho:** adicionar, remover, alterar quantidades e finalizar a compra. A compra gera o arquivo `pedido_N.txt` com o resumo e os cuidados com as peças.
 - **Meus pedidos** e **Trocas e devoluções**.
-- **Área do administrador:** estoque, status dos pedidos e cadastro de produtos.
+- **Área do administrador:** estoque, pedidos e seus status (ao marcar um pedido como entregue, informa-se há quantos dias foi a entrega), cadastro, remoção e alteração de preço de produtos.
+
 
 O arquivo `data/produtos.txt` tem um produto por linha, no formato `id;nome;categoria;preco;material;colecao;quantidade;tamanhos`. Cada tamanho é escrito como `TAMANHO=peito,cintura,quadril`, e os tamanhos são separados por `|`.
+
+### Regras da loja
+
+- **Kits:** com 2 peças, 10% de desconto; com 3 ou mais, 15%.
+- **Trocas e devoluções:** só para pedidos com status "Entregue", para produtos que fazem parte do pedido e em até 30 dias depois da entrega (`TrocaDevolucao::PRAZO_DIAS`). Quando a solicitação é recusada, o programa mostra o motivo.
+- **Estoque:** a quantidade nunca fica negativa, e não é possível comprar mais unidades do que as disponíveis.
 
 ### Programação defensiva e exceções (C9)
 
