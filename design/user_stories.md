@@ -10,7 +10,7 @@ Como cliente, quero criar e gerenciar meu perfil para realizar compras e receber
 - Não permitir o cadastro de dois clientes utilizando o mesmo e-mail.
 - Permitir o cadastro e a atualização de dados pessoais e endereço de entrega.
 - Permitir o cadastro de medidas corporais, como altura, tórax, cintura e quadril.
-- Permitir informar a preferência de caimento entre justo, normal e largo.
+- Permitir informar a preferência de caimento entre justo, normal e solto.
 
 ---
 
@@ -77,24 +77,25 @@ Como cliente, quero solicitar a troca ou devolução de um produto para resolver
 
 **Critérios de aceitação:**
 - Permitir solicitar a troca ou devolução de um item de um pedido.
-- Verificar se a solicitação está dentro do prazo permitido pela loja.
+- Verificar se a solicitação está dentro do prazo de 30 dias após a entrega do pedido.
 - Verificar se o produto é elegível para troca ou devolução.
 - Impedir a solicitação quando o produto não atender às regras estabelecidas.
 - Informar o motivo da recusa quando uma solicitação não for elegível.
 
 ---
 
-## US07 — Gerenciamento de produtos, coleções e descontos
+## US07 — Gerenciamento do catálogo de produtos
 
 **Descrição:**  
-Como administrador, quero cadastrar e gerenciar produtos e coleções para controlar o catálogo e aplicar diferentes políticas de desconto.
+Como administrador, quero cadastrar e gerenciar os produtos para manter o catálogo da loja atualizado.
 
 **Critérios de aceitação:**
-- Permitir cadastrar, alterar e remover produtos.
-- Permitir associar produtos a diferentes coleções.
-- Permitir definir regras de desconto para cada coleção.
-- Aplicar automaticamente o desconto aos produtos elegíveis.
-- Exibir o preço original e o preço final quando houver desconto.
+- Permitir cadastrar produtos com nome, categoria, preço, material, coleção e tabela de medidas.
+- Permitir alterar o preço de um produto.
+- Permitir remover um produto do catálogo.
+- Associar cada produto a uma coleção, exibida no catálogo.
+- Impedir o cadastro ou a alteração com preço negativo.
+
 
 ---
 
