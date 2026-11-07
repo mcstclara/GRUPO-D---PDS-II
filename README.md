@@ -34,9 +34,8 @@ Desenvolver um sistema de comércio eletrônico de roupas e acessórios que perm
 - finalizar compras;
 - consultar pedidos;
 - gerenciar estoque;
-- gerenciar produtos e coleções;
-- aplicar políticas de desconto;
-- solicitar trocas e devoluções.
+- gerenciar o catálogo de produtos, organizados em coleções;
+- solicitar trocas e devoluções dentro do prazo.
 
 ---
 
@@ -52,23 +51,19 @@ Desenvolver um sistema de comércio eletrônico de roupas e acessórios que perm
 - Recomendação de tamanho pelo provador virtual;
 - Adição e remoção de produtos do carrinho;
 - Alteração da quantidade de produtos;
-- Montagem de kits;
-- Aplicação de descontos;
+- Montagem de kits com desconto automático;
 - Finalização de pedidos;
 - Consulta do resumo da compra;
 - Solicitação de trocas e devoluções.
 
 ### Para administradores:
 
-- Cadastro de produtos;
-- Atualização de produtos;
-- Remoção de produtos;
-- Gerenciamento de coleções;
-- Definição de políticas de desconto;
+- Cadastro de produtos, com coleção e tabela de medidas;
+- Alteração do preço dos produtos;
+- Remoção de produtos do catálogo;
 - Consulta e atualização do estoque;
 - Consulta de pedidos;
-- Atualização do status dos pedidos;
-- Consulta de solicitações de troca e devolução.
+- Atualização do status dos pedidos, com o registro da entrega.
 
 ---
 
