@@ -76,7 +76,16 @@ public:
      *
      * @return Preço do produto.
      */
-    virtual double getPreco() const;
+        virtual double getPreco() const;
+
+    /**
+     * @brief Altera o preço do produto.
+     *
+     * @param novoPreco Novo preço, em reais.
+     * @throws std::invalid_argument se o preço for negativo.
+     */
+    void setPreco(double novoPreco);
+
 
     /**
      * @brief Retorna o material do produto.

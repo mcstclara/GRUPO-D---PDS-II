@@ -36,6 +36,13 @@ double Produto::getPreco() const {
     return preco;
 }
 
+void Produto::setPreco(double novoPreco) {
+    if (novoPreco < 0.0) {
+        throw std::invalid_argument("O preco do produto nao pode ser negativo.");
+    }
+    preco = novoPreco;
+}
+
 std::string Produto::getMaterial() const {
     return material;
 }

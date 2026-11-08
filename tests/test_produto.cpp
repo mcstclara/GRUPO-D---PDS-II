@@ -70,3 +70,11 @@ TEST_CASE("Produto: recusa tamanhos sem as três medidas") {
     CHECK_THROWS_AS(camiseta.adicionarTamanho("P", {88.0, -1.0, 94.0}), std::invalid_argument);
     CHECK(camiseta.getTamanhos().empty());
 }
+
+TEST_CASE("Produto: altera o preço e recusa preço negativo") {
+    Produto camiseta(1, "Camiseta Basica", "Camisetas", 59.90, "Algodao", "Verao 2026");
+    camiseta.setPreco(49.90);
+    CHECK(camiseta.getPreco() == doctest::Approx(49.90));
+    CHECK_THROWS_AS(camiseta.setPreco(-10.0), std::invalid_argument);
+    CHECK(camiseta.getPreco() == doctest::Approx(49.90));
+}
