@@ -117,3 +117,21 @@ TEST_CASE("TrocaDevolucao: explica o motivo da recusa") {
     CHECK(incompleta.explicarRecusa() ==
           "A solicitacao precisa de um pedido e de um produto.");
 }
+
+TEST_CASE("TrocaDevolucao: respeita o prazo de 30 dias após a entrega") {
+    Produto vestido(1, "Vestido Floral", "Vestidos", 150.0, "Viscose", "Verao 2026");
+    Pedido pedido(100, nullptr);
+    pedido.adicionarProduto(&vestido, 1);
+    pedido.atualizarStatus("Entregue");
+
+    pedido.registrarDiasDesdeEntrega(TrocaDevolucao::PRAZO_DIAS);
+    TrocaDevolucao dentroDoPrazo(&pedido, &vestido, "Tamanho errado");
+    CHECK(dentroDoPrazo.verificarElegibilidade() == true);
+
+    pedido.registrarDiasDesdeEntrega(TrocaDevolucao::PRAZO_DIAS + 1);
+    TrocaDevolucao foraDoPrazo(&pedido, &vestido, "Tamanho errado");
+    CHECK(foraDoPrazo.verificarElegibilidade() == false);
+    CHECK(foraDoPrazo.explicarRecusa().find("prazo") != std::string::npos);
+    foraDoPrazo.solicitarTroca();
+    CHECK(foraDoPrazo.getStatus() == "Recusada");
+}

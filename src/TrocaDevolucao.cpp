@@ -3,6 +3,8 @@
 
 #include <stdexcept>
 
+const int TrocaDevolucao::PRAZO_DIAS = 30;
+
 
 TrocaDevolucao::TrocaDevolucao(Pedido* pedido,
                                Produto* produto,

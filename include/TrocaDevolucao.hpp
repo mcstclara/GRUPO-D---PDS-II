@@ -22,6 +22,11 @@ private:
 
 public:
     /**
+     * @brief Prazo, em dias após a entrega, para pedir troca ou devolução.
+     */
+    static const int PRAZO_DIAS;
+
+    /**
      * @brief Construtor da classe TrocaDevolucao.
      *
      * @param pedido Pedido relacionado à solicitação.
