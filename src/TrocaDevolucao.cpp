@@ -22,12 +22,21 @@ std::string TrocaDevolucao::explicarRecusa() const {
     if (pedido->getStatus() != "Entregue") {
         return "O pedido ainda nao foi entregue (status: " + pedido->getStatus() + ").";
     }
+        bool produtoNoPedido = false;
     for (Produto* p : pedido->getProdutos()) {
         if (p == produto) {
-            return "";
+            produtoNoPedido = true;
         }
     }
-    return "Este produto nao faz parte do pedido.";
+    if (!produtoNoPedido) {
+        return "Este produto nao faz parte do pedido.";
+    }
+    if (pedido->getDiasDesdeEntrega() > PRAZO_DIAS) {
+        return "O prazo de " + std::to_string(PRAZO_DIAS) +
+               " dias para troca ou devolucao terminou (pedido entregue ha " +
+               std::to_string(pedido->getDiasDesdeEntrega()) + " dias).";
+    }
+    return "";
 }
 
 bool TrocaDevolucao::verificarElegibilidade() const {

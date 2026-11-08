@@ -38,7 +38,10 @@ public:
                    const std::string& motivo);
 
     /**
-     * @brief Verifica se o produto pode ser trocado ou devolvido.
+     *      * @brief Verifica se o produto pode ser trocado ou devolvido.
+     *
+     * A solicitação é elegível quando o pedido foi entregue há no máximo
+     * PRAZO_DIAS dias e o produto faz parte dele.
      *
      * @return true se a solicitação for elegível e false caso contrário.
      */
