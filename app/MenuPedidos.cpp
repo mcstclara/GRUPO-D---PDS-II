@@ -19,8 +19,13 @@ void menuPedidos(Loja& loja) {
     }
     std::cout << "\n--- Meus pedidos ---\n" << std::fixed << std::setprecision(2);
     for (Pedido* pedido : pedidos) {
-        std::cout << "Pedido " << pedido->getId() << " | " << pedido->getStatus()
-                  << " | R$ " << pedido->calcularTotal() << "\n";
+         std::cout << "Pedido " << pedido->getId() << " | " << pedido->getStatus()
+                  << " | R$ " << pedido->calcularTotal();
+        if (pedido->getStatus() == "Entregue") {
+            std::cout << " | entregue ha " << pedido->getDiasDesdeEntrega() << " dia(s)";
+        }
+        std::cout << "\n";
+
     }
     int pedidoId = lerInteiro("Numero do pedido para ver o resumo (0 para voltar): ",
                               0, 1000000);
