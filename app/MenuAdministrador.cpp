@@ -118,6 +118,18 @@ static void removerProduto(Loja& loja) {
     std::cout << produto->getNome() << " saiu do catalogo.\n";
 }
 
+static void atualizarPreco(Loja& loja) {
+    int produtoId = lerInteiro("ID do produto: ", 1, 1000000);
+    Produto* produto = loja.buscarProduto(produtoId);
+    std::cout << std::fixed << std::setprecision(2) << "Preco atual de "
+              << produto->getNome() << ": R$ " << produto->getPreco() << "\n";
+    double novoPreco = lerDecimal("Novo preco (R$): ", 0.0, 100000.0);
+    produto->setPreco(novoPreco);
+    loja.getAdministrador().atualizarProduto(produto);
+    std::cout << "Preco de " << produto->getNome() << " agora e R$ "
+              << produto->getPreco() << ".\n";
+}
+
 void menuAdministrador(Loja& loja) {
 
     while (true) {
@@ -128,8 +140,9 @@ void menuAdministrador(Loja& loja) {
                   << "[4] Atualizar status de um pedido\n"
                   << "[5] Cadastrar produto\n"
                   << "[6] Remover produto\n"
+                  << "[7] Alterar preco de um produto\n"
                   << "[0] Voltar\n";
-        int opcao = lerInteiro("Escolha uma opcao: ", 0, 6);
+        int opcao = lerInteiro("Escolha uma opcao: ", 0, 7);
         if (opcao == 0) {
             return;
         } else if (opcao == 1) {
@@ -142,8 +155,10 @@ void menuAdministrador(Loja& loja) {
             atualizarStatus(loja);
         } else if (opcao == 5) {
             cadastrarProduto(loja);
-        } else {
+        } else if (opcao == 6) {
             removerProduto(loja);
+        } else {
+            atualizarPreco(loja);
         }
     }
 }
