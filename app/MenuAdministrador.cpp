@@ -107,6 +107,17 @@ static void cadastrarProduto(Loja& loja) {
               << ") cadastrado.\n";
 }
 
+static void removerProduto(Loja& loja) {
+    int produtoId = lerInteiro("ID do produto: ", 1, 1000000);
+    Produto* produto = loja.buscarProduto(produtoId);
+    if (!lerSimNao("Remover " + produto->getNome() + " do catalogo?")) {
+        std::cout << "Nada foi removido.\n";
+        return;
+    }
+    loja.getAdministrador().removerProduto(produto);
+    std::cout << produto->getNome() << " saiu do catalogo.\n";
+}
+
 void menuAdministrador(Loja& loja) {
 
     while (true) {
@@ -116,8 +127,9 @@ void menuAdministrador(Loja& loja) {
                   << "[3] Ver pedidos\n"
                   << "[4] Atualizar status de um pedido\n"
                   << "[5] Cadastrar produto\n"
+                  << "[6] Remover produto\n"
                   << "[0] Voltar\n";
-        int opcao = lerInteiro("Escolha uma opcao: ", 0, 5);
+        int opcao = lerInteiro("Escolha uma opcao: ", 0, 6);
         if (opcao == 0) {
             return;
         } else if (opcao == 1) {
@@ -128,8 +140,10 @@ void menuAdministrador(Loja& loja) {
             verPedidos(loja);
         } else if (opcao == 4) {
             atualizarStatus(loja);
-        } else {
+        } else if (opcao == 5) {
             cadastrarProduto(loja);
+        } else {
+            removerProduto(loja);
         }
     }
 }
