@@ -83,6 +83,10 @@ static void atualizarStatus(Loja& loja) {
     }
     int escolha = lerInteiro("Novo status: ", 1, static_cast<int>(opcoes.size()));
     loja.getAdministrador().atualizarStatusPedido(pedido, opcoes[escolha - 1]);
+    if (pedido->getStatus() == "Entregue") {
+        int dias = lerInteiro("Ha quantos dias o pedido foi entregue? (0 = hoje): ", 0, 365);
+        pedido->registrarDiasDesdeEntrega(dias);
+    }
     std::cout << "Pedido " << pedidoId << " agora esta: " << pedido->getStatus() << ".\n";
 }
 
