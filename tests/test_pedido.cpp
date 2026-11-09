@@ -97,3 +97,12 @@ TEST_CASE("Pedido: salva o resumo com os cuidados das peças em arquivo") {
     CHECK_THROWS_AS(pedido.salvarResumo("pasta_que_nao_existe/resumo.txt"),
                     std::runtime_error);
 }
+TEST_CASE("Pedido: registra há quantos dias foi entregue") {
+    Pedido pedido(100, nullptr);
+    CHECK(pedido.getDiasDesdeEntrega() == 0);
+    pedido.atualizarStatus("Entregue");
+    pedido.registrarDiasDesdeEntrega(10);
+    CHECK(pedido.getDiasDesdeEntrega() == 10);
+    CHECK_THROWS_AS(pedido.registrarDiasDesdeEntrega(-1), std::invalid_argument);
+    CHECK(pedido.getDiasDesdeEntrega() == 10);
+}

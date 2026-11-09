@@ -23,7 +23,8 @@ private:
     std::vector<int> quantidades; 
 
     double valorTotal;
-    std::string status; 
+    std::string status;
+    int diasDesdeEntrega; 
 
 public: 
 
@@ -101,6 +102,25 @@ std::string getStatus() const;
      */
 
 void atualizarStatus(const std::string& status); 
+
+ /**
+     * @brief Registra há quantos dias o pedido foi entregue.
+     *
+     * Usado para conferir o prazo de troca e devolução.
+     *
+     * @param dias Número de dias desde a entrega (0 = entregue hoje).
+     * @throws std::invalid_argument se dias for negativo.
+     */
+
+void registrarDiasDesdeEntrega(int dias);
+
+ /**
+     * @brief Retorna há quantos dias o pedido foi entregue.
+     *
+     * @return Número de dias desde a entrega (0 se nada foi registrado).
+     */
+
+int getDiasDesdeEntrega() const;
 
  /**
      * @brief Gera um resumo do pedido.

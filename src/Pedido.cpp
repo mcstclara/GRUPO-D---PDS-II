@@ -31,7 +31,8 @@ static void escreverCuidados(std::ostream& saida, const Produto* produto) {
 }
 
 Pedido::Pedido(int id, Cliente* cliente)
-    : id(id), cliente(cliente), valorTotal(0.0), status("Pendente") {}
+    : id(id), cliente(cliente), valorTotal(0.0), status("Pendente"),
+      diasDesdeEntrega(0) {}
 
 void Pedido::adicionarProduto(Produto* produto, int quantidade) {
     if(produto == nullptr){
@@ -108,4 +109,15 @@ void Pedido::salvarResumo(const std::string& caminho) const {
             }
         }
     }
+}
+
+void Pedido::registrarDiasDesdeEntrega(int dias) {
+    if (dias < 0) {
+        throw std::invalid_argument("O numero de dias desde a entrega nao pode ser negativo.");
+    }
+    diasDesdeEntrega = dias;
+}
+
+int Pedido::getDiasDesdeEntrega() const {
+    return diasDesdeEntrega;
 }
