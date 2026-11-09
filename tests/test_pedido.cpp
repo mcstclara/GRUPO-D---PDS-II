@@ -106,3 +106,10 @@ TEST_CASE("Pedido: registra há quantos dias foi entregue") {
     CHECK_THROWS_AS(pedido.registrarDiasDesdeEntrega(-1), std::invalid_argument);
     CHECK(pedido.getDiasDesdeEntrega() == 10);
 }
+TEST_CASE("Pedido: só registra a entrega de um pedido entregue") {
+    Pedido pedido(100, nullptr);
+    CHECK_THROWS_AS(pedido.registrarDiasDesdeEntrega(3), std::logic_error);
+    pedido.atualizarStatus("Enviado");
+    CHECK_THROWS_AS(pedido.registrarDiasDesdeEntrega(3), std::logic_error);
+    CHECK(pedido.getDiasDesdeEntrega() == 0);
+}

@@ -110,6 +110,7 @@ void atualizarStatus(const std::string& status);
      *
      * @param dias Número de dias desde a entrega (0 = entregue hoje).
      * @throws std::invalid_argument se dias for negativo.
+     * @throws std::logic_error se o status do pedido não for "Entregue".
      */
 
 void registrarDiasDesdeEntrega(int dias);

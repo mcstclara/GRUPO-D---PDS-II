@@ -115,7 +115,11 @@ void Pedido::registrarDiasDesdeEntrega(int dias) {
     if (dias < 0) {
         throw std::invalid_argument("O numero de dias desde a entrega nao pode ser negativo.");
     }
+    if (status != "Entregue") {
+        throw std::logic_error("So e possivel registrar a entrega de um pedido com status Entregue.");
+    }
     diasDesdeEntrega = dias;
+
 }
 
 int Pedido::getDiasDesdeEntrega() const {
