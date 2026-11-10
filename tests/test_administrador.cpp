@@ -102,3 +102,11 @@ TEST_CASE("Administrador: recusa status desconhecido e ponteiros vazios") {
     CHECK_THROWS_AS(admin.atualizarStatusPedido(nullptr, "Enviado"), std::invalid_argument);
     CHECK_THROWS_AS(admin.atualizarEstoque(nullptr, 1, 5), std::invalid_argument);
 }
+
+TEST_CASE("Administrador: confere a senha de acesso") {
+    Administrador admin(1, "Maria", "maria@loja.com", "senha123");
+
+    CHECK(admin.verificarSenha("senha123"));
+    CHECK_FALSE(admin.verificarSenha("errada"));
+    CHECK_FALSE(admin.verificarSenha(""));
+}

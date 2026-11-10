@@ -59,6 +59,14 @@ public:
     std::string getEmail() const;
 
     /**
+     * @brief Confere se a senha informada é a senha do administrador.
+     *
+     * @param senha Senha digitada para entrar na área do administrador.
+     * @return true se a senha estiver correta.
+     */
+    bool verificarSenha(const std::string& senha) const;
+
+    /**
      * @brief Retorna os produtos cadastrados no catálogo da loja.
      *
      * @return Lista de produtos cadastrados.

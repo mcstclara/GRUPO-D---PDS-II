@@ -11,6 +11,10 @@ Administrador::Administrador(int id,
                              const std::string& senha)
     : id(id), nome(nome), email(email), senha(senha) {}
 
+bool Administrador::verificarSenha(const std::string& senha) const {
+    return this->senha == senha;
+}
+
 int Administrador::getId() const {
     return id;
 }
