@@ -135,6 +135,10 @@ static void atualizarPreco(Loja& loja) {
 }
 
 void menuAdministrador(Loja& loja) {
+    std::string senha = lerTexto("Senha do administrador: ");
+    if (!loja.getAdministrador().verificarSenha(senha)) {
+        throw AcessoNegado("Senha do administrador incorreta.");
+    }
 
     while (true) {
         std::cout << "\n--- Area do administrador ---\n"

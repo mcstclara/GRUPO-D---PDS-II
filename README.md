@@ -112,7 +112,7 @@ Na raiz do repositório, rode `make run` (no Windows, `mingw32-make run` no Git 
 - **Provador virtual:** recomendação de tamanho a partir das medidas.
 - **Carrinho:** adicionar, remover, alterar quantidades e finalizar a compra. A compra gera o arquivo `pedido_N.txt` com o resumo e os cuidados com as peças.
 - **Meus pedidos** e **Trocas e devoluções**.
-- **Área do administrador:** estoque, pedidos e seus status (ao marcar um pedido como entregue, informa-se há quantos dias foi a entrega), cadastro, remoção e alteração de preço de produtos.
+- **Área do administrador:** pede a senha do administrador (`admin123`) antes de abrir. Tem estoque, pedidos e seus status (ao marcar um pedido como entregue, informa-se há quantos dias foi a entrega), cadastro, remoção e alteração de preço de produtos.
 
 
 O arquivo `data/produtos.txt` tem um produto por linha, no formato `id;nome;categoria;preco;material;colecao;quantidade;tamanhos`. Cada tamanho é escrito como `TAMANHO=peito,cintura,quadril`, e os tamanhos são separados por `|`.
